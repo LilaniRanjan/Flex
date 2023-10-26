@@ -1,0 +1,86 @@
+*{
+    margin: 0; 
+    padding: 0;
+ 
+}
+body{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+h5{
+    color: white;
+    margin: 10px;
+    
+}
+.loyality{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.table-container{
+    width: 45%;
+    margin: 0 auto;
+    margin-top: 40px;
+    border: 2px solid white;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.40);
+}
+.table{
+    width: 96%;
+    margin-left: 2%;
+}
+@media screen and (max-width: 768px) {
+    .table-container {
+        width: 100%;
+    }
+    h5{
+        font-size: 13px;
+    }
+    .table {
+        width: 96%;
+        margin-left: 2%;
+        font-size: 10px;
+    }
+}
+@media screen and (max-width: 550px) {
+    .table-container {
+        width: 100%;
+    }
+    h5{
+        font-size: 10px;
+    }
+    .table {
+        width: 96%;
+        margin-left: 2%;
+        font-size: 8px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .table-container {
+        width: 100%;
+    }
+    h5{
+        font-size: 10px;
+    }
+    .table {
+        width: 96%;
+        margin-left: 2%;
+        font-size: 8px;
+    }
+}
+@media screen and (max-width: 250px) {
+    .table-container {
+        width: 100%;
+    }
+    h5{
+        font-size: 10px;
+    }
+    .table {
+        width: 96%;
+        margin-left: 2%;
+        font-size: 8px;
+    }
+}

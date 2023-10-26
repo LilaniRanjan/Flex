@@ -11,6 +11,8 @@ include './classes/ExtraIngredients.php';
 
 require './classes/DbConnector.php';
 
+
+
 try {
     $db_con = new \classes\DbConnector();
     $con = $db_con->getConnection();
@@ -139,10 +141,8 @@ try {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle mx-3" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meals</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                    <a class="dropdown-item" href="#">Page 1</a>
-                                    <a class="dropdown-item" href="#">Page 2</a>
-                                    <a class="dropdown-item" href="#">Page 3</a>
-                                    <a class="dropdown-item" href="#">Page 4</a>
+                                    <a class="dropdown-item" href="./meals.php">Meals</a>
+                                    <a class="dropdown-item" href="./beverage.php">Beverages</a>
                                 </div>
                             </li>
                             <li class="nav-item mx-3"><a href="#" class="nav-link">Advertisment</a></li>
@@ -159,7 +159,7 @@ try {
 
         <!--main part Start-->
         <div class="container" id="container" style="">
-            <form action="" method="POST" style="width:100%">
+            <form action="addFoodCusPage.php" method="POST" style="width:100%">
                 <table>
                     <tr>
                         <th>
@@ -171,7 +171,7 @@ try {
                     <fieldset>
                         <tr>
                             <th>
-                        <legend><h4>Rice Selection</h4></legend>
+                        <legend><h4 style="color: wheat;">Rice Selection</h4></legend>
                         </th>
                         </tr>
                         <div class="option-group">
@@ -196,7 +196,7 @@ try {
                             ?>
                         </div>
                     </fieldset>
-
+                    
                     <!-- Curry Selection -->
                     <fieldset>
                         <tr>
@@ -213,7 +213,7 @@ try {
                                         <tr>
                                             <td>
                                                 <div class="form-check" id="foodItem">
-                                                    <input class="form-check-input" type="checkbox" name="curry" id="chicken" value="<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con); ?>">
+                                                    <input class="form-check-input" type="checkbox" name="curry[]" id="chicken" value="<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con); ?>">
                                                     <label class="form-check-label" for="chicken"><?php echo $curry->getCurry_name(); ?> - Rs <?php echo $curry->getCurry_price(); ?></label>
                                                 </div>
                                             </td>
@@ -236,7 +236,7 @@ try {
                                     <h4>
                                         <label for="spice">Spice Level:</label>
                                     </h4>
-                                    <select class="custom-select" id="spice">
+                                    <select name="spice" class="custom-select" id="spice">
                                         <?php 
                                             try{
                                                 $rs3 = classes\SpiceLevel::GetSpicyDetails($con);
@@ -264,7 +264,7 @@ try {
                                 <h4>
                                     <label for="portion">Portion Size:</label>
                                 </h4>
-                                <select class="custom-select" id="spice">
+                                <select name="portion" class="custom-select" id="spice">
                                     <?php 
                                     try{
                                         $rs4 = classes\PortionSize::GetPortionSizeDetails($con);
@@ -299,7 +299,7 @@ try {
                                         <tr>
                                              <td>
                                                  <div class="form-check" id="foodItem">
-                                                     <input class="form-check-input" type="checkbox" name="extra" id="onions" value="<?php echo $extra->getExtraIngredientIdByName($extra->getExtra_ingredients_name(), $con); ?>">
+                                                     <input class="form-check-input" type="checkbox" name="extra[]" id="onions" value="<?php echo $extra->getExtraIngredientIdByName($extra->getExtra_ingredients_name(), $con); ?>">
                                                      <label class="form-check-label" for="onions"><?php echo $extra->getExtra_ingredients_name(); ?> - Rs <?php echo $extra->getExtra_ingredients_price(); ?></label>
                                                  </div>
                                              </td>
@@ -312,9 +312,18 @@ try {
                             ?>
                         </div>
                     </fieldset>
+                    <?php 
+                        if($_SERVER["REQUEST_METHOD"] == "GET"){
+                            if(isset($_GET['total'])){
+                                $total_price = $_GET['total'];
+                            } else {
+                                $total_price = 0;
+                            }
+                        } 
+                    ?>
                     <tr>
                         <td>
-                            <button type="submit" class="btn btn-secondary btn-order">Place Order - Total: $</button>
+                            <button name="submit" type="submit" style="border: 2px solid #E88F2A; color: wheat; font-size: 20px;" class="btn btn-order">Place Order - Total: Rs <?php echo $total_price; ?>.00</button>
                         </td>
                     </tr>
                     <!-- Order Button -->

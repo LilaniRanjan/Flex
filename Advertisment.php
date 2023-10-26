@@ -46,7 +46,7 @@
         </style>
         <section class="advertisement">
             <div id="advertisementContainer" class="d-flex justify-content-between">
-                <div class="p-2">
+                <div class="p-2" style="font-size: 22px; color: black; font-weight: 400; text-align: center;">
                     IIT MARKRTTING DAY - 2023
                 </div>
                 <div class="p-2" id="closeAdvertisement">

@@ -9,24 +9,24 @@ class RiceDetails {
     private $rice_name;
     private $rice_price;
 
-    function __construct($rice_name, $rice_price) {
+    public function __construct($rice_name, $rice_price) {
         $this->rice_name = $rice_name;
         $this->rice_price = $rice_price;
     }
 
-    function getRice_name() {
+    public function getRice_name() {
         return $this->rice_name;
     }
 
-    function getRice_price() {
+    public function getRice_price() {
         return $this->rice_price;
     }
 
-    function setRice_name($rice_name) {
+    public function setRice_name($rice_name) {
         $this->rice_name = $rice_name;
     }
 
-    function setRice_price($rice_price) {
+    public function setRice_price($rice_price) {
         $this->rice_price = $rice_price;
     }
 
@@ -81,8 +81,6 @@ class RiceDetails {
         }
     }
 
-    //    Need to Check
-
     public function getRiceDetailById($con, $id) {
         $query = "SELECT * FROM Rice WHERE rice_Id = ?";
         $stmt = $con->prepare($query);
@@ -104,7 +102,7 @@ class RiceDetails {
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $this->rice_name);
             $pstmt->bindValue(2, $this->rice_price);
-            $pstmt->bindValue(3, $id); // Corrected to $this->id
+            $pstmt->bindValue(3, $id); 
 
             return $pstmt->execute();
         } catch (PDOException $exc) {
@@ -114,13 +112,30 @@ class RiceDetails {
 
     public static function deleteRiceDetails($con, $id) {
         try {
-            $obj = new DbConnector();
-            $con = $obj->getConnection();
             $query = "DELETE FROM Rice WHERE rice_Id = ?";
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $id);
 
             return $pstmt->execute();
+        } catch (PDOException $exc) {
+            die("ERROR in RiceDetails class GetRiceIdByRiceName Method :" . $exc->getMessage());
+        }
+    }
+    
+    public function GetRicePriceById($rice_id, $con) {
+        try {
+            $this->con = $con;
+            $query = "SELECT rice_price FROM Rice WHERE rice_Id = ?";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $rice_id);
+            $pstmt->execute();
+            $row = $pstmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                return $row['rice_price'];
+            } else {
+                return null;
+            }
         } catch (PDOException $exc) {
             die("ERROR in RiceDetails class GetRiceIdByRiceName Method :" . $exc->getMessage());
         }

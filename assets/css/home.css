@@ -28,7 +28,7 @@
 #threeMainCard{
     /*background: linear-gradient(0deg, rgba(255,186,33,0.5) 0%, rgba(255,186,33,1) 100%);*/
     background-color: #63d471;
-    /*background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);*/
+    background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
     background: linear-gradient(to bottom, #E88F2A, #000000);
     font-family: 'Oswald', sans-serif;
     color: #8fc93c;

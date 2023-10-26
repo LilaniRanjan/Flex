@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=');
+    margin: 120px;
+    padding: 0;
+}
+
+
+.container {
+  background-color:black;
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 30px;
+  border-radius: 5px;
+  border: 3px solid #E88F2A;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form input{
+    display: block;
+    width: 100%;
+    margin: 0 auto 15px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+form input[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #E88F2A;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    padding: 10px 100px;
+    font-size: 17px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color:#8c5b27;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+    color: white;
+}
+
+a {
+    color: #E88F2A;
+    text-decoration: underline;
+}
+
+h1{
+    color: white;
+}

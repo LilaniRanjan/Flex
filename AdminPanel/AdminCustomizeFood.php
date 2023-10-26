@@ -90,8 +90,8 @@ $dbcon = new \classes\DbConnector();
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="#" style="color: wheat;">
-                            <span class="material-icons-outlined">fact_check</span> Manage Transaction 
+                        <a href="View_poll.php" style="color: wheat;">
+                            <span class="material-icons-outlined">poll</span> Voting Poll
                         </a>
                     </li>
                     <li class="disabled" style="padding: 45px 20px 20px 20px;">
@@ -130,15 +130,15 @@ $dbcon = new \classes\DbConnector();
                 </div>
                 <div class="panel spice-panel">
                     <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="#" id="Textdecoration"><h2 style="color: #E88F2A;">Spice Level</h2></a>
+                    <a href="AdminSpicyManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">Spice Level</h2></a>
                 </div>
                 <div class="panel portion-panel">
                     <i class="fas fa-utensils panel-icon" style="color: #E88F2A;"></i>
-                    <a href="#" id="Textdecoration"><h2 style="color: #E88F2A;">Portion Size</h2></a>
+                    <a href="AdminPortionManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">Portion Size</h2></a>
                 </div>
                 <div class="panel extra-panel">
                     <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="#" id="Textdecoration"><h2 style="color: #E88F2A;">Extra Ingredients</h2></a>
+                    <a href="AdminExtraIngredientManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">Extra Ingredients</h2></a>
                 </div>
             </div>
             <!-- End Main -->

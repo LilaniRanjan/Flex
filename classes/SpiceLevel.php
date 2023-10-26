@@ -48,5 +48,57 @@ class SpiceLevel {
         }
         
     }
+    
+    public function addSpicyDetails($con) {
+        try {
+            $query = "INSERT INTO SpiceLevel (spice_level) VALUES (?)";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $this->spice_level);
+
+            return $pstmt->execute();
+        } catch (PDOException $exc) {
+            die("ERROR in SpiceLevel class addCurryDetails Method: " . $exc->getMessage());
+        }
+    }
+    
+    public function getSpicyDetailById($con, $id) {
+        $query = "SELECT * FROM SpiceLevel WHERE spice_level_Id = ?";
+        $stmt = $con->prepare($query);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new SpiceLevel($row['spice_level']);
+        } else {
+            return null;
+        }
+    }
+    
+    public function updateSpicyDetails($con, $id) {
+        try {
+            $query = "UPDATE SpiceLevel SET spice_level = ? WHERE spice_level_Id = ?";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $this->spice_level);
+            $pstmt->bindValue(2, $id); 
+
+            return $pstmt->execute();
+        } catch (PDOException $exc) {
+            die("ERROR in SpiceLevel class updateCurryDetails Method: " . $exc->getMessage());
+        }
+    }
+    
+    public static function deleteSpicyDetails($con, $id) {
+        try {
+            $query = "DELETE FROM SpiceLevel WHERE spice_level_Id = ?";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $id);
+
+            return $pstmt->execute();
+        } catch (PDOException $exc) {
+            die("ERROR in SpiceLevel class deleteCurryDetails Method :" . $exc->getMessage());
+        }
+    }
 
 }

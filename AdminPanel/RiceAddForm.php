@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require '../classes/RiceDetails.php';
 require '../classes/DbConnector.php';
 
@@ -134,11 +135,8 @@ try {
                             $rice_detail = new \classes\RiceDetails($rice_name, $rice_price);
                             $rice = $rice_detail->addRiceDetails($con);
                             if ($rice) {
-                                ?>
-                                <div class="alert alert-success" role="alert">
-                                    Added Successfully
-                                </div>
-                                <?php
+                                    header("Location: AdminRiceManage.php");
+                                    ob_end_flush();
                             } else {
                                 ?>
                                 <div class="alert alert-danger" role="alert">

@@ -1,7 +1,14 @@
 <?php
 require_once '../classes/CurryDetails.php';
+
 require '../classes/DbConnector.php';
 
+try {
+    $db_obj = new classes\DbConnector();
+    $con = $db_obj->getConnection();
+} catch (Exception $exc) {
+    echo "Error in AdminRiceManagment File Db Connection: " . $exc->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +39,44 @@ require '../classes/DbConnector.php';
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     </head>
     <body>
+        <style>
+            body{
+                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+            }
+
+            #tableEdit{
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
+            }
+
+            hr{
+                background-color: whitesmoke;
+            }
+            table{
+                background-color: #E88F2A;
+            }
+            td{
+                background-color: black;
+            }
+
+            button{
+                border-color: #E88F2A;
+            }
+
+            input[type="search"]::placeholder {
+                color: #999; /* Change to your desired placeholder text color */
+            }
+            
+            .header{
+                background-color: #333;
+                color: wheat;
+            }
+            span{
+                color: wheat;
+            }
+        </style>
 
         <div class="grid-container">
 
@@ -60,37 +105,37 @@ require '../classes/DbConnector.php';
 
                 <ul class="sidebar-list">
                     <li class="sidebar-list-item">
-                        <a href="AdminHome.php">
+                        <a href="AdminHome.php" style="color: wheat;">
                             <span class="material-icons-outlined">dashboard</span> Home
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="AdminCustomizeFood.php">
+                        <a href="AdminCustomizeFood.php" style="color: wheat;">
                             <span class="material-icons-outlined">inventory_2</span> Customize Food
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="#">
+                        <a href="#" style="color: wheat;">
                             <span class="material-icons-outlined">fact_check</span> Manage Transaction 
                         </a>
                     </li>
                     <li class="disabled" style="padding: 45px 20px 20px 20px;">
-                        <a href="#" style="text-decoration: none; color: #9799ab; cursor: none;">
+                        <a href="#" style="text-decoration: none; color: #9799ab; cursor: none;" style="color: wheat;">
                             REPORTS
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="#">
+                        <a href="#" style="color: wheat;">
                             <span class="material-icons-outlined">poll</span> Transaction Reports
                         </a>
                     </li>
                     <li class="disabled" style="padding: 45px 20px 20px 20px;">
-                        <a href="#" style="text-decoration: none; color: #9799ab; cursor: none;">
+                        <a href="#" style="text-decoration: none; color: #9799ab; cursor: none;" style="color: wheat;">
                             MAINTENANCE
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="#">
+                        <a href="#" style="color: wheat;">
                             <span class="material-icons-outlined"><i class="fa fa-server" aria-hidden="true"></i></span> Category List
                         </a>
                     </li>
@@ -99,63 +144,82 @@ require '../classes/DbConnector.php';
             <!-- End Sidebar -->
 
             <!-- Main -->
-            <div class="card m-5">
+            <div class="card m-5" id="tableEdit">
                 <div class="card-header my-3 d-inline">
                     CURRY DETAILS MANAGEMENT
                 </div>
+                <hr>
                 <div class="d-inline d-flex justify-content-end mx-3">
-                    <a href="TransactionForm.jsp" data-toggle="modal" class="btn btn-primary active" role="button" aria-pressed="true">ADD NEW</a>
+                    <a href="CurryAddForm.php" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white;">ADD NEW</a>
                 </div>
 
                 <div class="card-body">
                     <h5 class="card-title">
                         <div class="input-group">
-                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                            <button type="button" class="btn btn-outline-primary">search</button>
+                            <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="border: 1px solid #E88F2A; background: black; color: white;"/>
+                            <button type="button" class="btn" style="border: 1px solid #E88F2A; color: #E88F2A; background-color: black;">search</button>
                         </div>
                     </h5>
                     <div>
                         <div class="charts my-4">
 
                             <div class="charts-cardss table-responsive">
+                                <?php 
+                                    if($_SERVER["REQUEST_METHOD"] == "GET"){
+                                        if(isset($_GET['error'])){
+                                            if($_GET['error']==1){
+                                                ?>
+                                                <div class="alert alert-light" role="alert">
+                                                    You already have an oder in this curry ! 
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                ?>
                                 <table class="table table-hover table-responsive-md">
-                                    <thead class="text-center table-success py-2">
+                                    <thead class="text-center py-2">
                                         <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Curry Id</th>
-                                            <th scope="col">Curry Name</th>
-                                            <th scope="col">Curry Price (Rs)</th>
-                                            <th scope="col" colspan="2">Action</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col" class="text-center">Curry Id</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col">Curry Name</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col">Curry Price (Rs)</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col" colspan="2">Action</th>
                                         </tr>
                                     </thead>
-                                    <?php 
+
+                                    <?php
+                                    try {
                                         $i = 1;
-                                        $rs = classes\CurryDetails::GetCurryDetails();
-                                            
-                                        foreach ($rs as $curry){
-                                                
-                                    ?>
-                                    <tbody class="text-center">
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td>
-                                                <?php 
-                                                    $Curry_details = new classes\CurryDetails($curry->getCurry_name(), $curry->getCurry_price());
-                                                    $Curry_Id = $Curry_details->GetCurryIdByCurryName($curry->getCurry_name());
-                                                    
-                                                    echo $Curry_Id;
-                                                ?>
-                                            </td>
-                                            <td><?php echo $curry->getCurry_name(); ?></td>
-                                            <td><?php echo $curry->getCurry_price(); ?></td>
-                                            <td><a href=""><button id="iconColour" style=""><i class="fa fa-pencil-square" aria-hidden="true"></i></button></a></td>
-                                            <td><a href=""><button id="iconColour"><i class="fa fa-trash" aria-hidden="true"></i></button></a></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php 
-                                        $i++;
+                                        $rs = \classes\CurryDetails::GetCurryDetails($con);
+                                        foreach ($rs as $curry) {
+                                            ?>
+                                            <tbody class="text-center">
+                                                <tr>
+                                                    <td style="background-color: black; color: white;"><?php echo $i; ?></td>
+                                                    <td style="background-color: black; color: white;">
+                                                        <?php
+                                                        $curry_details = new \classes\CurryDetails($curry->getCurry_name(), $curry->getCurry_price());
+                                                        $curry_id = $curry_details->GetCurryIdByCurryName($curry->getCurry_name(), $con);
+
+                                                        echo $curry_id;
+                                                        ?>
+                                                    </td>
+                                                    <td style="background-color: black; color: white;"><?php echo $curry->getCurry_name(); ?></td>
+                                                    <td style="background-color: black; color: white;"><?php echo $curry->getCurry_price(); ?></td>
+                                                    <td style="background-color: black; color: white;"><a href="CurryEdit.php?id=<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con) ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                                    <td style="background-color: black;color: white;"><a href="CurryDelete.php?id=<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con) ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            $i++;
                                         }
+                                    } catch (Exception $exc) {
+                                        echo "Error in Load Rice details: " . $exc->getMessage();
+                                    }
                                     ?>
+
+
                                 </table>
                             </div>
                         </div>
@@ -164,15 +228,15 @@ require '../classes/DbConnector.php';
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
+                                    <a class="page-link" href="#" aria-label="Previous" style="background-color: black;">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#" style="background-color: black; color: white;">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#" style="background-color: black; color: white;">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#"style="background-color: black; color: white;">3</a></li>
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
+                                    <a class="page-link" href="#" aria-label="Next" style="background-color: black;">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

@@ -3,6 +3,7 @@ require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
 
 $dbcon = new \classes\DbConnector();
+$con = $dbcon->getConnection();
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +55,42 @@ $dbcon = new \classes\DbConnector();
     </head>
 
     <body id="bodyCon">
+        <style>
+            #rounded-button{
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                text-transform: uppercase;
+                border: none;
+                border-radius: 20px; /* Adjust this value to control the roundness of the corners */
+                cursor: pointer;
+                background-color: black;
+                color: #fff;
+                transition: background-color 0.3s ease;
+                border: 3px solid #E88F2A;
+            }
+            
+            #parastyle{
+                background-color: rgb(0,0,0, 0.7);
+                
+            }
+            
+        .feedback-button {
+            background-color: #000000; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback-button:hover {
+            background-color: #2980b9; 
+        }
+        </style>
 
         <!--Top Header-->
         <div class="wrap" id="wrap">
@@ -107,7 +144,7 @@ $dbcon = new \classes\DbConnector();
                         </div>
                         <div class="col-md-1">
                             <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                <button type="button" class="btn btn-outline-warning btn-lg">Sign In</button>
+                                <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
                             </div> 
                         </div>
                     </div>
@@ -125,13 +162,11 @@ $dbcon = new \classes\DbConnector();
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle mx-3" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meals</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                    <a class="dropdown-item" href="#">Page 1</a>
-                                    <a class="dropdown-item" href="#">Page 2</a>
-                                    <a class="dropdown-item" href="#">Page 3</a>
-                                    <a class="dropdown-item" href="#">Page 4</a>
+                                    <a class="dropdown-item" href="meals.php">Meals</a>
+                                    <a class="dropdown-item" href="beverage.php">Beverages</a>
                                 </div>
                             </li>
-                            <li class="nav-item mx-3"><a href="#" class="nav-link">Advertisment</a></li>
+                            <li class="nav-item mx-3"><a href="Advertisment.php" class="nav-link">Advertisment</a></li>
                             <li class="nav-item mx-3"><a href="#" class="nav-link">Contact</a></li>
                             <li class="nav-item mx-3"><a href="#" class="nav-link">About Us</a></li>
                         </ul>
@@ -157,13 +192,12 @@ $dbcon = new \classes\DbConnector();
                             <!-- Wrapper for carousel items -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img id="sliderImg" src="https://kurinjirestaurant.com/images/1.jpg" alt="">
+                                    <img id="sliderImg" src="https://img.freepik.com/premium-photo/plate-sushi-with-salmon-cucumber_865967-43248.jpg" alt="">
                                     <div class="carousel-caption">
                                         <h3>Flavorful Excellence</h3><br>
-                                        <p style="background-color: rgba(255, 204, 0, 0.9); color: black; border: 1px solid black;">Discover a delectable feast at our Flex—where flavor meets excellence!</p>
+                                        <p id="parastyle" style="color: wheat; border: 1px solid black;">Discover a delectable feast at our Flex—where flavor meets excellence!</p>
                                         <div class="carousel-action">
-                                            <a href="#" class="btn btn-primary">MORE AD</a>
-                                            <a href="#" class="btn btn-success" style="background-color: rgba(255, 204, 0, 0.9);">SEE MORE</a>
+                                            <a href="Advertisment.php" class="btn btn-primary" id="rounded-button">VIEW</a>
                                         </div>
                                     </div>
                                 </div>	
@@ -171,21 +205,19 @@ $dbcon = new \classes\DbConnector();
                                     <img id="sliderImg" src="https://www.thetaste.nz/image/cache/catalog/Sliders/12-1900x700.jpg" alt="">
                                     <div class="carousel-caption">
                                         <h3>Flavorful Excellence</h3><br>
-                                        <p>Discover a delectable feast at our Flex—where flavor meets excellence!</p>
+                                        <p id="parastyle" style="color: wheat; border: 1px solid black;">Discover a delectable feast at our Flex—where flavor meets excellence!</p>
                                         <div class="carousel-action">
-                                            <a href="#" class="btn btn-primary">MORE AD</a>
-                                            <a href="#" class="btn btn-success">SEE MORE</a>
+                                            <a href="Advertisment.php" class="btn btn-primary" id="rounded-button">VIEW</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="item">
-                                    <img id="sliderImg" src="https://img.freepik.com/premium-photo/plate-sushi-with-salmon-cucumber_865967-43248.jpg" alt="">
+                                    <img id="sliderImg" src="https://kurinjirestaurant.com/images/1.jpg" alt="">
                                     <div class="carousel-caption">
                                         <h3>Flavorful Excellence</h3><br>
-                                        <p>Discover a delectable feast at our Flex—where flavor meets excellence!</p>
+                                        <p id="parastyle" style="color: wheat; border: 1px solid black;">Discover a delectable feast at our Flex—where flavor meets excellence!</p>
                                         <div class="carousel-action">
-                                            <a href="#" class="btn btn-primary">MORE AD</a>
-                                            <a href="#" class="btn btn-success">SEE MORE</a>
+                                            <a href="Advertisment.php" class="btn btn-primary" id="rounded-button">VIEW</a>
                                         </div>
                                     </div>
                                 </div>	
@@ -216,39 +248,39 @@ $dbcon = new \classes\DbConnector();
                                     <div class="ad-title m-auto">
                                         <h2 id="FirstCard" class="">Customer Loyality</h2>
                                     </div>
-                                    <button id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
+                                    <a href="CustomerLoyality.php" id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
                                         SEE MORE
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div id="threeMainCard" class="card rounded text-center p-4 mx-4">
                                 <div class="card-image">
-                                    <img id="customerLoyalityCard" class="img-fluid" src="https://static.vecteezy.com/system/resources/previews/016/765/986/original/steak-fast-food-cartoon-png.png" alt="Alternate Text" />
+                                    <img id="customerLoyalityCard" class="img-fluid" src="./assets/image/meal.png" alt="Alternate Text" />
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="ad-title m-auto">
                                         <h2 id="FirstCard" class="">Meals</h2>
                                     </div>
-                                    <button id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
+                                    <a href="meals.php" id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
                                         SEE MORE
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div id="threeMainCard" class="card rounded text-center p-4 mx-4">
                                 <div class="card-image">
-                                    <img id="customerLoyalityCard" class="img-fluid" src="https://cdn-icons-png.flaticon.com/512/7440/7440506.png" alt="Alternate Text" />
+                                    <img id="customerLoyalityCard" class="img-fluid" src="./assets/image/vote.png" alt="Alternate Text" />
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="ad-title m-auto">
                                         <h2 id="FirstCard" class="">Vote For Food</h2>
                                     </div>
-                                    <button id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
+                                    <a href="Vote.php" id="firstCardButton" type="button" class="btn mb-2 mb-md-0 btn-round btn-outline-light">
                                         SEE MORE
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +307,7 @@ $dbcon = new \classes\DbConnector();
                                         
                                         <?php 
                                             $i = 1;
-                                            $rs = PopularFoodDetails::displayAllPopularFood();
+                                            $rs = PopularFoodDetails::displayAllPopularFood($con);
                                             
                                             foreach ($rs as $popular_food){
                                                 
@@ -337,7 +369,7 @@ $dbcon = new \classes\DbConnector();
                         <div id="container">
                             <div id="blockquote-custom">
                                 <div id="blockquote-custom-icon"><i class="fa fa-quote-left text-white"></i></div>
-                                <p class="mb-0 mt-2 font-italic">"The Flex canteen provides a delightful dining experience with its delicious and diverse menu. <a href="#" class="text-info">#Flex</a>."</p>
+                                <p class="mb-0 mt-2 font-italic">"The Flex canteen offers a delightful experience with a diverse menu, prompt service, and a clean environment. The food is delicious and reasonably priced, making it a top choice for students.<a href="#" class="text-info">#Flex</a>."</p>
                                 <footer id="blockquote-footer" class="pt-4 mt-4 border-top">Someone famous in
                                     <cite title="Source Title">UWU</cite>
                                 </footer>
