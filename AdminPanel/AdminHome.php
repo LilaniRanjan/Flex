@@ -126,7 +126,7 @@ $dbcon = new \classes\DbConnector();
                 </div>
                 <div class="panel spice-panel">
                     <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="#" id="Textdecoration"><h2 style="color: #E88F2A;">ADVERTISMENT</h2></a>
+                    <a href="AdminAddAdvertisment.php" id="Textdecoration"><h2 style="color: #E88F2A;">ADVERTISMENT</h2></a>
                 </div>
             </div>
             <!-- End Main -->

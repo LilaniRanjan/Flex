@@ -24,6 +24,9 @@ if (isset($_POST["user_id"], $_POST["password"])) {
             $role = $user->getRole();
 
             // Set the user's role in the session
+            $_SESSION["user_id"] = $user->getUserId();
+            $_SESSION["first_name"] = $user->getFirstName();
+            $_SESSION["last_name"] = $user->getLastName();
             $_SESSION["role"] = $role;
 
             // Redirect based on the user's role
@@ -32,7 +35,6 @@ if (isset($_POST["user_id"], $_POST["password"])) {
             } elseif ($role == 'cashier') {
                 $location = "cashier_dashboard.php";
             } elseif ($role == 'student') {
-                echo 'Hello';
                 $location = "index.php";
             } else {
                 // Handle other roles or errors

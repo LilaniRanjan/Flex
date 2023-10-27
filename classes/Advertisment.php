@@ -37,7 +37,19 @@ class Advertisment {
         $this->user_id = $user_id;
     }
 
-    
+    public function addAdvertismentDetails($con) {
+        try {
+            $query = "INSERT INTO advertisement (advertisment_file, user_id, ad_title) VALUES (?, ?, ?)";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $this->advertisment_file);
+            $pstmt->bindValue(2, $this->user_id);
+            $pstmt->bindValue(3, $this->ad_title);
+
+            return $pstmt->execute();
+        } catch (PDOException $exc) {
+            die("ERROR in Advertisment class addAdvertismentDetails Method: " . $exc->getMessage());
+        }
+    }
     
     
 }
