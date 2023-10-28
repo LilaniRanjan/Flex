@@ -2,6 +2,9 @@
 
 namespace classes;
 
+use PDO;
+
+
 class Advertisment {
     private $advertisment_file;
     private $ad_title;
@@ -51,5 +54,20 @@ class Advertisment {
         }
     }
     
-    
+    public static function GetAllAdvertismentDetails($con) {
+        $ad_list = array();
+        $query = "SELECT * FROM advertisement";
+        $pstmt = $con->prepare($query);
+        $pstmt->execute();
+        while ($row = $pstmt->fetch(PDO::FETCH_ASSOC)) {
+            $event_name = $row['ad_title'];
+            $advertisment_file = $row['advertisment_file'];
+            $user_id = $row['user_id'];
+
+            $ad_details = new Advertisment($advertisment_file, $event_name, $user_id);
+            $ad_list[] = $ad_details; 
+        }
+
+        return $ad_list;
+    }
 }

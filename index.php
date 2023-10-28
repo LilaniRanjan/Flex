@@ -315,7 +315,7 @@ $con = $dbcon->getConnection();
                                         <div class="col-sm-3">
                                             <div class="thumb-wrapper">
                                                 <div class="img-box">
-                                                    <img src="<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt="">
+                                                    <img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt="">
                                                 </div>
                                                 <div class="thumb-content">
                                                     <h4><?php echo $popular_food->getPopular_food_name(); ?></h4>
@@ -398,6 +398,8 @@ $con = $dbcon->getConnection();
                             </div>
                         </div>
                     </section>
+                    
+                    <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
                 </div>
                 <div class="row carousel-item">
                     <section id="feedbackCard" class="py-5 col-lg-4">
@@ -433,6 +435,8 @@ $con = $dbcon->getConnection();
                             </div>
                         </div>
                     </section>
+                    
+                    <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
                 </div>
             </div>
             <!--Feedback Section End-->

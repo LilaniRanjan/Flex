@@ -1,3 +1,16 @@
+<?php
+require_once './classes/Advertisment.php';
+
+require './classes/DbConnector.php';
+
+try {
+    $db_obj = new classes\DbConnector();
+    $con = $db_obj->getConnection();
+} catch (Exception $exc) {
+    echo "Error in Advertisment File Db Connection: " . $exc->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -45,23 +58,38 @@
             }
         </style>
         <section class="advertisement">
+            <?php 
+                try{
+                    $rs = classes\Advertisment::GetAllAdvertismentDetails($con);
+                    foreach ($rs as $ad){
+            ?>
             <div id="advertisementContainer" class="d-flex justify-content-between">
                 <div class="p-2" style="font-size: 22px; color: black; font-weight: 400; text-align: center;">
-                    IIT MARKRTTING DAY - 2023
+                    <?php echo $ad->getAd_title(); ?>
                 </div>
                 <div class="p-2" id="closeAdvertisement">
                     <strong>X</strong>
                 </div>
             </div>
-
+            
             <div id="advertisementCarousel" class="carousel slide mt-5" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    
+                            <div class="carousel-item active">
+                                <img style="width: 70%; padding-bottom: 10%; padding-left: 35%" src="./AdminPanel/<?php echo $ad->getAdvertisment_file(); ?>" alt="Advertisement">
+                            </div>
+                            <?php
+                            }
+                        } catch (Exception $exc){
+                            echo "Error in Load Advertisment details: " . $exc->getMessage();
+                        }
+                    ?>
+<!--                    <div class="carousel-item active">
                         <img style="width: 70%; padding-bottom: 10%; padding-left: 35%" src="./Advertisment/Product.png" alt="Advertisement 1">
                     </div>
                     <div class="carousel-item">
                         <img style="width: 70%; padding-bottom: 10%; padding-left: 35%" src="./Advertisment/Price.png" alt="Advertisement 2">
-                    </div>
+                    </div>-->
                     <!-- Add more carousel items for additional advertisements -->
                 </div>
             </div>

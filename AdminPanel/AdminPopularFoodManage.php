@@ -195,7 +195,15 @@ try {
                                                         echo $popular_food_id;
                                                         ?>
                                                     </td>
-                                                    <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_image_file(); ?></td>
+                                                    <td style="background-color: black; color: white;">
+                                                        <?php 
+                                                         if($food->getPopular_food_image_file()){
+                                                             echo 'YES';
+                                                         } else {
+                                                             echo 'NO';
+                                                         }
+                                                        ?>
+                                                    </td>
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_name(); ?></td>
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_default_price(); ?></td>
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_current_price(); ?></td>

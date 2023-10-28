@@ -7,7 +7,7 @@ try {
     $db_obj = new classes\DbConnector();
     $con = $db_obj->getConnection();
 } catch (Exception $exc) {
-    echo "Error in AdminRiceManagment File Db Connection: " . $exc->getMessage();
+    echo "Error in AdminCurryManagment File Db Connection: " . $exc->getMessage();
 }
 ?>
 
@@ -215,7 +215,7 @@ try {
                                             $i++;
                                         }
                                     } catch (Exception $exc) {
-                                        echo "Error in Load Rice details: " . $exc->getMessage();
+                                        echo "Error in Load Curry details: " . $exc->getMessage();
                                     }
                                     ?>
 

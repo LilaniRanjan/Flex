@@ -127,33 +127,72 @@ try {
                 </div>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-                    if (isset($_POST['popular_food_image_file'], $_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_vote'])) {
-                        $popular_food_image_file = $_POST['popular_food_image_file'];
+                    if (isset($_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_vote'])) {
+//                        $popular_food_image_file = $_POST['popular_food_image_file'];
                         $popular_food_name = $_POST['popular_food_name'];
                         $popular_food_default_price = $_POST['popular_food_default_price'];
                         $popular_food_current_price = $_POST['popular_food_current_price'];
                         $popullar_food_vote = $_POST['popullar_food_vote'];
-
-                        try {
-                            $popular_detail = new PopularFoodDetails($popular_food_image_file, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_vote);
-                            $popular = $popular_detail->addPopularFoodDetails($con);
-                            if ($popular) {
-                                header("Location: AdminPopularFoodManage.php");
-                                ob_end_flush();
-                            } else {
+                        
+                        if(isset($_FILES) & !empty($_FILES)){
+                            $name = $_FILES['popular_food_image_file']['name'];
+                            $size = $_FILES['popular_food_image_file']['size'];
+                            $type = $_FILES['popular_food_image_file']['type'];
+                            $tmp_name = $_FILES['popular_food_image_file']['tmp_name'];
+                            
+                            $max_size = 10000000;
+                            $extension = substr($name, strpos($name, '.') + 1);
+                            
+                            if(isset($name) && !empty($name)){
+                                if(($extension == "jpg" || $extension == "jpeg") && $type == "image/jpeg" && $size<=$max_size){
+                                    $location = "uploads/";
+                                    if(move_uploaded_file($tmp_name, $location.$name)){
+                                        try {
+                                            $imgs = $location.$name;
+                                            $popular_detail = new PopularFoodDetails($imgs, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_vote);
+                                            $popular = $popular_detail->addPopularFoodDetails($con);
+                                            if ($popular) {
+                                                header("Location: AdminPopularFoodManage.php");
+                                                ob_end_flush();
+                                            } else {
+                                                ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Added Failed!
+                                                </div>
+                                                <?php
+                                            }
+                                        } catch (PDOException $exc) {
+                                            ?>
+                                            <div class="alert alert-danger" role="alert">
+                                                <?php echo "An error occurred: " . $exc->getMessage(); ?>
+                                            </div>
+                                            <?php
+                                        }
+                                        
+                                    } else {
+                                        ?>
+                                            <div class="alert alert-danger" role="alert">
+                                                Failed to Upload File!
+                                            </div>
+                                        <?php
+                                    }
+                                }else {
+                                    ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            Only JPG files are allowed and should be less that 1MB!
+                                        </div>
+                                    <?php
+                                }
+                            }else {
                                 ?>
-                                <div class="alert alert-danger" role="alert">
-                                    Added Failed!
-                                </div>
+                                    <div class="alert alert-danger" role="alert">
+                                        Please Select a File!
+                                    </div>
                                 <?php
                             }
-                        } catch (PDOException $exc) {
-                            ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?php echo "An error occurred: " . $exc->getMessage(); ?>
-                            </div>
-                            <?php
                         }
+
+                        
                     } else {
                         ?>
                         <div class="alert alert-danger" role="alert">
@@ -171,8 +210,9 @@ try {
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="form-group my-2">
-                                    <label for="popular_food_image_file">Popular Food Image URL :</label>
-                                    <input style="background-color: black; color: white;" name="popular_food_image_file" type="text" id="popular_food_image_file" class="form-control" required/>  
+                                    <label for="popular_food_image_file">Event Image</label>
+                                    <input type="file" name="popular_food_image_file" id="popular_food_image_file">
+                                    <p class="help-block">Only jpg/png are allowed.</p>
                                 </div>
                                 <br>
                                 <div class="form-group my-2">

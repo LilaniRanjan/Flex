@@ -154,7 +154,7 @@ try {
                                     if(move_uploaded_file($tmp_name, $location.$name)){
                                         try {
                                             $imgs = $location.$name;
-                                            $advertisment_detail = new \classes\Advertisment($imgs, $event_name, "UWU/AD/001");
+                                            $advertisment_detail = new \classes\Advertisment($imgs, $event_name, $_SESSION['user_id']);
                                             $ad = $advertisment_detail->addAdvertismentDetails($con);
                                             if ($ad) {
                                                 header("Location: ../Advertisment.php");
