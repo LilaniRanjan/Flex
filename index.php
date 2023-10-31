@@ -315,7 +315,7 @@ $con = $dbcon->getConnection();
                                         <div class="col-sm-3">
                                             <div class="thumb-wrapper">
                                                 <div class="img-box">
-                                                    <img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt="">
+                                                    <a href="SingleProduct.php"><img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt=""></a>
                                                 </div>
                                                 <div class="thumb-content">
                                                     <h4><?php echo $popular_food->getPopular_food_name(); ?></h4>

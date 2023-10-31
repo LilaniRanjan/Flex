@@ -1,7 +1,14 @@
 <?php
 ob_start();
+session_start();
+include('../classes/DbConnector.php');
+if(!isset($_SESSION['user_id']) && empty($_SESSION['user_id'])){
+ header('location:../Login.php');
+}
+?>
+
+<?php
 require '../classes/PopularFoodDetails.php';
-require '../classes/DbConnector.php';
 
 try {
     $db_obj = new classes\DbConnector();
