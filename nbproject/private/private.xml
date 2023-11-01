@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Flex/Chatgpt.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/classes/PopularFoodDetails.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/AdminPopularFoodManage.php</file>
             <file>file:/C:/xampp/htdocs/Flex/SingleProduct.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/AdminAddAdvertisment.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodEdit.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodAddForm.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AddToCard.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/cart.php</file>
             <file>file:/C:/xampp/htdocs/Flex/index.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/AdminCurryManage.php</file>
         </group>
     </open-files>
 </project-private>

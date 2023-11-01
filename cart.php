@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
 
@@ -56,54 +57,44 @@ $con = $dbcon->getConnection();
 
     <body id="bodyCon">
         <style>
-            #rounded-button{
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                font-weight: bold;
-                text-align: center;
-                text-transform: uppercase;
-                border: none;
-                border-radius: 20px; /* Adjust this value to control the roundness of the corners */
-                cursor: pointer;
+            body{
+                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+            }
+
+            #tableEdit{
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
+            }
+
+            hr{
+                background-color: whitesmoke;
+            }
+            table{
+                background-color: #E88F2A;
+            }
+            td{
                 background-color: black;
-                color: #fff;
-                transition: background-color 0.3s ease;
-                border: 3px solid #E88F2A;
             }
 
-            #parastyle{
-                background-color: rgb(0,0,0, 0.7);
-
+            button{
+                border-color: #E88F2A;
             }
 
-            .feedback-button {
-                background-color: #000000; 
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            input[type="search"]::placeholder {
+                color: #999; /* Change to your desired placeholder text color */
             }
 
-            .feedback-button:hover {
-                background-color: #2980b9; 
+            .header{
+                background-color: #333;
+                color: wheat;
             }
-            .quantity-input {
-                width: 70px; 
-                padding: 8px;
-                font-size: 16px;
-            }
-            
-            #styleOfContents{
-                background-color: rgb(0,0,0,0.8);
-                font-size: 18px;
-                color: white;
-                border: 2px solid white;
-                border-radius: 25px;
+            span{
+                color: wheat;
             }
         </style>
+
 
         <!--Top Header-->
         <div class="wrap" id="wrap">
@@ -188,48 +179,72 @@ $con = $dbcon->getConnection();
                 </div>
             </nav>
         </div>
-        
-        
-        <!--Main Content Section-->
 
-        <?php 
-        if(isset($_GET["id"])){
-            $popular_food_id = $_GET["id"];
-            $popular_obj = new PopularFoodDetails(null, null, null, null, null);
-            $popular_detail = $popular_obj->getPopularFoodDetailById($con, $popular_food_id);
-            if ($popular_detail) {
+        <?php
+        $cart = $_SESSION['cart'];
+        print_r($cart);
         ?>
 
-        <div class="container mt-5 py-5" id="styleOfContents">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" alt="Product Image" class="img-fluid p-5">
-                </div>
-                <div class="col-md-6 mt-5 pt-5">
-                    <h1 style="color: wheat;"><?php echo $popular_detail->getPopular_food_name(); ?></h1>
-                    <br>
-                    <p>
-                        <span class="px-3" style="color: whitesmoke;"><s>Rs <?php echo $popular_detail->getPopular_food_default_price(); ?></s></span>  
-                        <span class="px-3" style="color: whitesmoke;">Rs <?php echo $popular_detail->getPopular_food_current_price(); ?></span> 
-                    </p>
-                    <p class="py-4"><?php echo $popular_detail->getPopular_food_desc(); ?></p>
-                    
-                    <form action="AddToCard.php">
-                        <input type="hidden" name="id" value= '<?php echo $popular_food_id ?>' >
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control mb-2 quantity-input">
-                    
-                    
-                        <button class="btn btn-outline-warning mt-5" type='submit'>Add to Cart</button>
-                    </form>
+
+
+        <!--Main Content Section-->
+        <div class="card m-5" id="tableEdit">
+            <div class="card-header my-3 d-inline px-5 mx-5">
+                TOTAL : Rs 0.00
+            </div>
+            <hr>
+            <div class="d-inline d-flex justify-content-end mx-5 px-5">
+                <a href="#" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white;">CHECKOUT</a>
+            </div>
+
+            <div class="card-body px-5 mx-5">
+                <div>
+                    <div class="charts my-4">
+
+                        <div class="charts-cardss table-responsive">
+                            <table class="table table-hover table-responsive-md">
+                                <thead class="text-center py-2">
+                                    <tr>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">IMAGE</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">PRICE</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">QUANTITY</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">TOTAL</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col" colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="text-center">
+
+                                    <?php
+                                    foreach ($cart as $key => $value) {
+                                        $i = 1;
+                                        $popular_obj = new PopularFoodDetails(null, null, null, null, null);
+                                        $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
+                                        ?>
+                                        <tr>
+                                            <td style="background-color: black; color: white;"><?php echo $i; ?></td>
+                                            <td style="background-color: black; color: white;"><img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" class="img-fluid" alt="" style="height: 80px; width: 80px;"></td>
+                                            <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
+                                            <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
+                                            <td style="background-color: black; color: white;">5.00</td>
+                                            <td style="background-color: black; color: white;"><a href="PopularFoodEdit.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                            <td style="background-color: black;color: white;"><a href="PopularFoodDelete.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                        </tr>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <?php
-            }
-        }
-        ?>
 
 
         <!-- Footer Start -->
