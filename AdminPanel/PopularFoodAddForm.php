@@ -134,12 +134,12 @@ try {
                 </div>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-                    if (isset($_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_vote'])) {
+                    if (isset($_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_desc'])) {
 //                        $popular_food_image_file = $_POST['popular_food_image_file'];
                         $popular_food_name = $_POST['popular_food_name'];
                         $popular_food_default_price = $_POST['popular_food_default_price'];
                         $popular_food_current_price = $_POST['popular_food_current_price'];
-                        $popullar_food_vote = $_POST['popullar_food_vote'];
+                        $popullar_food_desc = $_POST['popullar_food_desc'];
                         
                         if(isset($_FILES) & !empty($_FILES)){
                             $name = $_FILES['popular_food_image_file']['name'];
@@ -156,7 +156,7 @@ try {
                                     if(move_uploaded_file($tmp_name, $location.$name)){
                                         try {
                                             $imgs = $location.$name;
-                                            $popular_detail = new PopularFoodDetails($imgs, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_vote);
+                                            $popular_detail = new PopularFoodDetails($imgs, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_desc);
                                             $popular = $popular_detail->addPopularFoodDetails($con);
                                             if ($popular) {
                                                 header("Location: AdminPopularFoodManage.php");
@@ -238,8 +238,8 @@ try {
                                 </div>
                                 <br>
                                 <div class="form-group my-2">
-                                    <label for="popullar_food_vote">Popular Food Vote Count :</label>
-                                    <input style="background-color: black; color: white;" name="popullar_food_vote" type="number" id="popullar_food_vote" class="form-control" required/>
+                                    <label for="popullar_food_desc">Popular Food Discription :</label>
+                                    <input style="background-color: black; color: white;" name="popullar_food_desc" type="number" id="popullar_food_desc" class="form-control" required/>
                                 </div>
                                 <br>
                                 <br>

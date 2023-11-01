@@ -132,7 +132,7 @@ $con = $dbcon->getConnection();
                         <div class="col-md-2">
                             <div class="float-right">
                                 <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                    <a href="#">
+                                    <a href="AddToCard.php">
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
@@ -315,37 +315,14 @@ $con = $dbcon->getConnection();
                                         <div class="col-sm-3">
                                             <div class="thumb-wrapper">
                                                 <div class="img-box">
-                                                    <a href="SingleProduct.php"><img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt=""></a>
+                                                    <a href="SingleProduct.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con)?>"><img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt=""></a>
                                                 </div>
                                                 <div class="thumb-content">
                                                     <h4><?php echo $popular_food->getPopular_food_name(); ?></h4>
                                                     <p class="item-price"><strike style="color: black;">Rs <?php echo $popular_food->getPopular_food_default_price(); ?></strike> <span style="color: white;">Rs <?php echo $popular_food->getPopular_food_current_price();  ?></span></p>
                                                     <div class="star-rating">
-                                                        <ul class="list-inline">
-                                                            <?php 
-                                                            $count = $popular_food->getPopular_food_vote();
-                                                            $num = 1;
-                                                            while ($num<=5){
-                                                                if ($num<=$count){
-                                                                    ?>
-                                                            <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                                    <?php
-                                                                } else {
-                                                                    ?>
-                                                                    <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                                                    <?php
-                                                                }
-                                                                $num++;
-                                                            }
-                                                            ?>
-<!--                                                            <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                            <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                            <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                            <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                            <li class="list-inline-item"><i class="fa fa-star-o"></i></li>-->
-                                                        </ul>
                                                     </div>
-                                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                                <a href="AddToCard.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con)?>" class="btn btn-primary">Add to Cart</a>
                                                 </div>						
                                             </div>
                                         </div>	

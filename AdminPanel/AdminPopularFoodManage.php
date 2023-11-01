@@ -189,7 +189,7 @@ try {
                                                     <td style="background-color: black; color: white;"><?php echo $i; ?></td>
                                                     <td style="background-color: black; color: white;">
                                                         <?php
-                                                        $food_details = new PopularFoodDetails($food->getPopular_food_image_file(), $food->getPopular_food_name(), $food->getPopular_food_default_price(), $food->getPopular_food_current_price(), $food->getPopular_food_vote());
+                                                        $food_details = new PopularFoodDetails($food->getPopular_food_image_file(), $food->getPopular_food_name(), $food->getPopular_food_default_price(), $food->getPopular_food_current_price(), $food->getPopular_food_desc());
                                                         $popular_food_id = $food_details->getPopularFoodIdByFoodName($food->getPopular_food_name(), $con);
 
                                                         echo $popular_food_id;
@@ -207,7 +207,7 @@ try {
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_name(); ?></td>
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_default_price(); ?></td>
                                                     <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_current_price(); ?></td>
-                                                    <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_vote(); ?></td>
+                                                    <td style="background-color: black; color: white;"><?php echo $food->getPopular_food_desc(); ?></td>
                                                     <td style="background-color: black; color: white;"><a href="PopularFoodEdit.php?id=<?php echo $food->getPopularFoodIdByFoodName($food->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                                     <td style="background-color: black;color: white;"><a href="PopularFoodDelete.php?id=<?php  echo $food->getPopularFoodIdByFoodName($food->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                                 </tr>
