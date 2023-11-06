@@ -225,10 +225,11 @@ $con = $dbcon->getConnection();
                                         <tr>
                                             <td style="background-color: black; color: white;"><?php echo $i; ?></td>
                                             <td style="background-color: black; color: white;"><img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" class="img-fluid" alt="" style="height: 80px; width: 80px;"></td>
+                                            <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><?php echo $popular_detail->getPopular_food_name(); ?></a></td>
                                             <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
                                             <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
                                             <td style="background-color: black; color: white;">5.00</td>
-                                            <td style="background-color: black; color: white;"><a href="PopularFoodEdit.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                            <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                             <td style="background-color: black;color: white;"><a href="PopularFoodDelete.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                         </tr>
                                         <?php
