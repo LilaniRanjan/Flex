@@ -11,8 +11,6 @@ if (isset($_GET['id'])) {
 
     $_SESSION['cart'][$id] = array('quantity' => $quantity);
 
-    echo '<pre>';
-    print_r($_SESSION);
-    echo '</pre>';
+    header('Location: cart.php');
 }
 ?>

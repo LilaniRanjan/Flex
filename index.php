@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
 
@@ -112,6 +113,10 @@ $con = $dbcon->getConnection();
                 </div>
             </div>
         </div>
+        <?php
+        $cart = $_SESSION['cart'];
+        $count = count($cart);
+        ?>
 
         <!--NavigationBar-->
         <div style="background: linear-gradient(#E88F2A, black); color: white;">
@@ -132,11 +137,11 @@ $con = $dbcon->getConnection();
                         <div class="col-md-2">
                             <div class="float-right">
                                 <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                    <a href="AddToCard.php">
+                                    <a href="cart.php">
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty">0 Food</span>
+                                        <span class="qty"><?php echo $count; ?> Food</span>
                                         <span class="fw-bold">$0.00</span>
                                     </div>    
                                 </div> 

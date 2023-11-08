@@ -182,7 +182,8 @@ $con = $dbcon->getConnection();
 
         <?php
         $cart = $_SESSION['cart'];
-        print_r($cart);
+        $total = 0;
+        $i = 1;
         ?>
 
 
@@ -207,6 +208,7 @@ $con = $dbcon->getConnection();
                                     <tr>
                                         <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
                                         <th style="background-color: #333; color: wheat;" scope="col" class="text-center">IMAGE</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">NAME</th>
                                         <th style="background-color: #333; color: wheat;" scope="col">PRICE</th>
                                         <th style="background-color: #333; color: wheat;" scope="col">QUANTITY</th>
                                         <th style="background-color: #333; color: wheat;" scope="col">TOTAL</th>
@@ -218,7 +220,6 @@ $con = $dbcon->getConnection();
 
                                     <?php
                                     foreach ($cart as $key => $value) {
-                                        $i = 1;
                                         $popular_obj = new PopularFoodDetails(null, null, null, null, null);
                                         $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
                                         ?>
@@ -228,12 +229,13 @@ $con = $dbcon->getConnection();
                                             <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><?php echo $popular_detail->getPopular_food_name(); ?></a></td>
                                             <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
                                             <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
-                                            <td style="background-color: black; color: white;">5.00</td>
+                                            <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
                                             <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                             <td style="background-color: black;color: white;"><a href="PopularFoodDelete.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                         </tr>
                                         <?php
                                         $i++;
+                                        $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                     }
                                     ?>
 
@@ -243,6 +245,15 @@ $con = $dbcon->getConnection();
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="card">
+                <div class="card-header">Total</div>
+                <div class="card-body">
+                    Total Amount : Rs <?php echo $total; ?>.00 
                 </div>
             </div>
         </div>
