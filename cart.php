@@ -231,7 +231,7 @@ $con = $dbcon->getConnection();
                                             <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
                                             <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
                                             <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
-                                            <td style="background-color: black;color: white;"><a href="PopularFoodDelete.php?id="><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                            <td style="background-color: black;color: white;"><a href="AddToCardFoodDelete.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                         </tr>
                                         <?php
                                         $i++;

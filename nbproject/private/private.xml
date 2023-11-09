@@ -5,13 +5,17 @@
         <group>
             <file>file:/C:/xampp/htdocs/Flex/classes/PopularFoodDetails.php</file>
             <file>file:/C:/xampp/htdocs/Flex/AdminPanel/AdminPopularFoodManage.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/SingleProduct.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodEdit.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodAddForm.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/classes/DbConnector.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/AdminAddAdvertisment.php</file>
             <file>file:/C:/xampp/htdocs/Flex/AddToCard.php</file>
             <file>file:/C:/xampp/htdocs/Flex/cart.php</file>
             <file>file:/C:/xampp/htdocs/Flex/index.php</file>
             <file>file:/C:/xampp/htdocs/Flex/advertisementShow.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/Advertisment.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/SingleProduct.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodEdit.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AddToCardFoodDelete.php</file>
+            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/PopularFoodAddForm.php</file>
         </group>
     </open-files>
 </project-private>

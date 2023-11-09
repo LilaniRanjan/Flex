@@ -114,8 +114,11 @@ $con = $dbcon->getConnection();
             </div>
         </div>
         <?php
-        $cart = $_SESSION['cart'];
-        $count = count($cart);
+        if($_SESSION['cart']){
+            $cart = $_SESSION['cart'];
+            $count = count($cart);
+        }
+        
         ?>
 
         <!--NavigationBar-->
@@ -141,7 +144,15 @@ $con = $dbcon->getConnection();
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty"><?php echo $count; ?> Food</span>
+                                        <span class="qty">
+                                            <?php 
+                                            if($cart){
+                                                echo $count;
+                                            } else {
+                                                echo 0;
+                                            }
+                                            ?> Food
+                                        </span>
                                         <span class="fw-bold">$0.00</span>
                                     </div>    
                                 </div> 
