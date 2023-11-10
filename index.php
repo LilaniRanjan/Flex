@@ -114,9 +114,10 @@ $con = $dbcon->getConnection();
             </div>
         </div>
         <?php
-        if($_SESSION['cart']){
+        if(isset($_SESSION['cart'])){
             $cart = $_SESSION['cart'];
             $count = count($cart);
+            $total = 0;
         }
         
         ?>
@@ -146,14 +147,23 @@ $con = $dbcon->getConnection();
                                     <div class="d-flex flex-column ms-2">
                                         <span class="qty">
                                             <?php 
-                                            if($cart){
+                                            if(isset($cart)){
                                                 echo $count;
                                             } else {
                                                 echo 0;
                                             }
                                             ?> Food
                                         </span>
-                                        <span class="fw-bold">$0.00</span>
+                                        <span class="fw-bold">
+                                            Rs <?php 
+                                                foreach ($cart as $key => $value){
+                                                    $popular_obj = new PopularFoodDetails(null, null, null, null, null);
+                                                    $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
+                                                    $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
+                                                } 
+                                                echo $total;
+                                                ?>.00
+                                        </span>
                                     </div>    
                                 </div> 
                             </div>

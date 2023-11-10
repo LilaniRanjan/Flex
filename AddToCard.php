@@ -11,6 +11,6 @@ if (isset($_GET['id'])) {
 
     $_SESSION['cart'][$id] = array('quantity' => $quantity);
 
-    header('Location: cart.php');
+    header('Location: index.php');
 }
 ?>

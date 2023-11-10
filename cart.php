@@ -59,6 +59,7 @@ $con = $dbcon->getConnection();
         <style>
             body{
                 background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+                font-size: 15px;
             }
 
             #tableEdit{
@@ -191,11 +192,10 @@ $con = $dbcon->getConnection();
         <!--Main Content Section-->
         <div class="card m-5" id="tableEdit">
             <div class="card-header my-3 d-inline px-5 mx-5">
-                TOTAL : Rs 0.00
             </div>
             <hr>
             <div class="d-inline d-flex justify-content-end mx-5 px-5">
-                <a href="#" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white;">CHECKOUT</a>
+                <a href="#" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white; font-size: 18px;">CHECKOUT</a>
             </div>
 
             <div class="card-body px-5 mx-5">
