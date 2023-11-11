@@ -182,9 +182,11 @@ $con = $dbcon->getConnection();
         </div>
 
         <?php
-        $cart = $_SESSION['cart'];
-        $total = 0;
-        $i = 1;
+        if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
+            $total = 0;
+            $i = 1;
+        }
         ?>
 
 
@@ -219,23 +221,25 @@ $con = $dbcon->getConnection();
                                 <tbody class="text-center">
 
                                     <?php
-                                    foreach ($cart as $key => $value) {
-                                        $popular_obj = new PopularFoodDetails(null, null, null, null, null);
-                                        $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
-                                        ?>
-                                        <tr>
-                                            <td style="background-color: black; color: white;"><?php echo $i; ?></td>
-                                            <td style="background-color: black; color: white;"><img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" class="img-fluid" alt="" style="height: 80px; width: 80px;"></td>
-                                            <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><?php echo $popular_detail->getPopular_food_name(); ?></a></td>
-                                            <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
-                                            <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
-                                            <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
-                                            <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
-                                            <td style="background-color: black;color: white;"><a href="AddToCardFoodDelete.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
-                                        </tr>
-                                        <?php
-                                        $i++;
-                                        $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
+                                    if (isset($_SESSION['cart'])) {
+                                        foreach ($cart as $key => $value) {
+                                            $popular_obj = new PopularFoodDetails(null, null, null, null, null);
+                                            $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
+                                            ?>
+                                            <tr>
+                                                <td style="background-color: black; color: white;"><?php echo $i; ?></td>
+                                                <td style="background-color: black; color: white;"><img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" class="img-fluid" alt="" style="height: 80px; width: 80px;"></td>
+                                                <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><?php echo $popular_detail->getPopular_food_name(); ?></a></td>
+                                                <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
+                                                <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
+                                                <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
+                                                <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                                <td style="background-color: black;color: white;"><a href="AddToCardFoodDelete.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                            $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
+                                        }
                                     }
                                     ?>
 
@@ -248,12 +252,12 @@ $con = $dbcon->getConnection();
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="card">
                 <div class="card-header">Total</div>
                 <div class="card-body">
-                    Total Amount : Rs <?php echo $total; ?>.00 
+                    Total Amount : Rs <?php if(isset($_SESSION['cart'])){echo $total;} else {echo 0;} ?>.00 
                 </div>
             </div>
         </div>
