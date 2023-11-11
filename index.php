@@ -72,25 +72,25 @@ $con = $dbcon->getConnection();
                 transition: background-color 0.3s ease;
                 border: 3px solid #E88F2A;
             }
-            
+
             #parastyle{
                 background-color: rgb(0,0,0, 0.7);
-                
-            }
-            
-        .feedback-button {
-            background-color: #000000; 
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
 
-        .feedback-button:hover {
-            background-color: #2980b9; 
-        }
+            }
+
+            .feedback-button {
+                background-color: #000000; 
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            .feedback-button:hover {
+                background-color: #2980b9; 
+            }
         </style>
 
         <!--Top Header-->
@@ -114,12 +114,11 @@ $con = $dbcon->getConnection();
             </div>
         </div>
         <?php
-        if(isset($_SESSION['cart'])){
+        if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
             $count = count($cart);
             $total = 0;
         }
-        
         ?>
 
         <!--NavigationBar-->
@@ -146,8 +145,8 @@ $con = $dbcon->getConnection();
                                     </a>
                                     <div class="d-flex flex-column ms-2">
                                         <span class="qty">
-                                            <?php 
-                                            if(isset($cart)){
+                                            <?php
+                                            if (isset($cart)) {
                                                 echo $count;
                                             } else {
                                                 echo 0;
@@ -155,14 +154,18 @@ $con = $dbcon->getConnection();
                                             ?> Food
                                         </span>
                                         <span class="fw-bold">
-                                            Rs <?php 
-                                                foreach ($cart as $key => $value){
+                                            Rs <?php
+                                            if (isset($cart)) {
+                                                foreach ($cart as $key => $value) {
                                                     $popular_obj = new PopularFoodDetails(null, null, null, null, null);
                                                     $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
                                                     $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
-                                                } 
+                                                }
                                                 echo $total;
-                                                ?>.00
+                                            }else{
+                                                echo 0;
+                                            }
+                                            ?>.00
                                         </span>
                                     </div>    
                                 </div> 
@@ -330,32 +333,31 @@ $con = $dbcon->getConnection();
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="row">
-                                        
-                                        <?php 
-                                            $i = 1;
-                                            $rs = PopularFoodDetails::displayAllPopularFood($con);
-                                            
-                                            foreach ($rs as $popular_food){
-                                                
-                                        ?>
-                                        <div class="col-sm-3">
-                                            <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <a href="SingleProduct.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con)?>"><img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt=""></a>
-                                                </div>
-                                                <div class="thumb-content">
-                                                    <h4><?php echo $popular_food->getPopular_food_name(); ?></h4>
-                                                    <p class="item-price"><strike style="color: black;">Rs <?php echo $popular_food->getPopular_food_default_price(); ?></strike> <span style="color: white;">Rs <?php echo $popular_food->getPopular_food_current_price();  ?></span></p>
-                                                    <div class="star-rating">
-                                                    </div>
-                                                <a href="AddToCard.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con)?>" class="btn btn-primary">Add to Cart</a>
-                                                </div>						
-                                            </div>
-                                        </div>	
-                                        <?php 
-                                            }
+
+                                        <?php
+                                        $i = 1;
+                                        $rs = PopularFoodDetails::displayAllPopularFood($con);
+
+                                        foreach ($rs as $popular_food) {
                                             ?>
-                                        				
+                                            <div class="col-sm-3">
+                                                <div class="thumb-wrapper">
+                                                    <div class="img-box">
+                                                        <a href="SingleProduct.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con) ?>"><img src="./AdminPanel/<?php echo $popular_food->getPopular_food_image_file(); ?>" class="img-fluid" alt=""></a>
+                                                    </div>
+                                                    <div class="thumb-content">
+                                                        <h4><?php echo $popular_food->getPopular_food_name(); ?></h4>
+                                                        <p class="item-price"><strike style="color: black;">Rs <?php echo $popular_food->getPopular_food_default_price(); ?></strike> <span style="color: white;">Rs <?php echo $popular_food->getPopular_food_current_price(); ?></span></p>
+                                                        <div class="star-rating">
+                                                        </div>
+                                                        <a href="AddToCard.php?id=<?php echo $popular_food->getPopularFoodIdByFoodName($popular_food->getPopular_food_name(), $con) ?>" class="btn btn-primary">Add to Cart</a>
+                                                    </div>						
+                                                </div>
+                                            </div>	
+    <?php
+}
+?>
+
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +403,7 @@ $con = $dbcon->getConnection();
                             </div>
                         </div>
                     </section>
-                    
+
                     <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
                 </div>
                 <div class="row carousel-item">
@@ -438,7 +440,7 @@ $con = $dbcon->getConnection();
                             </div>
                         </div>
                     </section>
-                    
+
                     <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
                 </div>
             </div>
@@ -506,13 +508,13 @@ $con = $dbcon->getConnection();
                     <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Flex</a>. All Rights Reserved.</p>
                 </div>
             </div>
-            
-        </div>
-    <?php
-// put your code here
-    ?>
 
-    <script src="./assets/js/jquery.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-</body>
+        </div>
+<?php
+// put your code here
+?>
+
+        <script src="./assets/js/jquery.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+    </body>
 </html>
