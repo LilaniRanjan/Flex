@@ -197,7 +197,7 @@ $con = $dbcon->getConnection();
             </div>
             <hr>
             <div class="d-inline d-flex justify-content-end mx-5 px-5">
-                <a href="#" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white; font-size: 18px;">CHECKOUT</a>
+                <button><a href="checkout.php" data-toggle="modal" class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white; font-size: 18px;">CHECKOUT</a></button>
             </div>
 
             <div class="card-body px-5 mx-5">

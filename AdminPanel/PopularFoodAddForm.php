@@ -239,7 +239,7 @@ try {
                                 <br>
                                 <div class="form-group my-2">
                                     <label for="popullar_food_desc">Popular Food Discription :</label>
-                                    <input style="background-color: black; color: white;" name="popullar_food_desc" type="number" id="popullar_food_desc" class="form-control" required/>
+                                    <input style="background-color: black; color: white;" name="popullar_food_desc" type="text" id="popullar_food_desc" class="form-control" required/>
                                 </div>
                                 <br>
                                 <br>

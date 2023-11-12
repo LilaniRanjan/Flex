@@ -98,16 +98,21 @@ $con = $dbcon->getConnection();
                 background-color: #333;
                 color: wheat;
             }
-            
+
             body{
                 background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
             }
-            
+
             #cardStyle{
                 background-color: rgba(0, 0, 0, 0.7);
                 color: white;
                 border: 2px solid #FFFFFF; 
                 border-radius: 20px;
+            }
+            #radioCard{
+                color: white;
+                background-color: rgb(0, 0, 0, 0.7);
+                border: 1px solid white;
             }
         </style>
 
@@ -209,44 +214,97 @@ $con = $dbcon->getConnection();
         <!--Main Content Section-->
         <main class="main-container">
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-                    <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
-                        <div class="card-header text-center"><h4 style="color: #E88F2A;">BILLING DETAILS</h4></div>
-                        <hr>
+                <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
+                    <div class="card-header text-center"><h4 style="color: #E88F2A;">BILLING DETAILS</h4></div>
+                    <hr>
+                    <div class="card-body">
                         <div class="card-body">
-                            <div class="card-body">
-                                <div class="form-group my-2">
-                                    <label for="first_name">First Name :</label>
-                                    <input style="background-color: black; color: white;" name="first_name" type="text" id="first_name" class="form-control" required/>  
-                                </div>
-                                <br>
-                                <div class="form-group my-2">
-                                    <label for="last_name">Last Name :</label>
-                                    <input style="background-color: black; color: white;" name="last_name" type="text" id="last_name" class="form-control" required/>
-                                </div>
-                                <br>
-                                <div class="form-group my-2">
-                                    <label for="address">Address :</label>
-                                    <input style="background-color: black; color: white;" name="address" type="text" id="address" class="form-control" required/>
-                                </div>
-                                <br>
-                                <div class="form-group my-2">
-                                    <label for="email">E-mail Address :</label>
-                                    <input style="background-color: black; color: white;" name="email" type="email" id="email" class="form-control" required/>
-                                </div>
-                                <br>
-                                <div class="form-group my-2">
-                                    <label for="phone_number">Phone number :</label>
-                                    <input style="background-color: black; color: white;" name="phone_number" type="number" id="phone_number" class="form-control" required/>
-                                </div>
-                                <br>
-                                <br>
-                                <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
+                            <div class="form-group my-2">
+                                <label for="first_name">First Name :</label>
+                                <input style="background-color: black; color: white;" name="first_name" type="text" id="first_name" class="form-control" required/>  
                             </div>
+                            <br>
+                            <div class="form-group my-2">
+                                <label for="last_name">Last Name :</label>
+                                <input style="background-color: black; color: white;" name="last_name" type="text" id="last_name" class="form-control" required/>
+                            </div>
+                            <br>
+                            <div class="form-group my-2">
+                                <label for="address">Address :</label>
+                                <input style="background-color: black; color: white;" name="address" type="text" id="address" class="form-control" required/>
+                            </div>
+                            <br>
+                            <div class="form-group my-2">
+                                <label for="email">E-mail Address :</label>
+                                <input style="background-color: black; color: white;" name="email" type="email" id="email" class="form-control" required/>
+                            </div>
+                            <br>
+                            <div class="form-group my-2">
+                                <label for="phone_number">Phone number :</label>
+                                <input style="background-color: black; color: white;" name="phone_number" type="number" id="phone_number" class="form-control" required/>
+                            </div>
+                            <br>
+                            <br>
+                            <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
         </main>
 
+        <div class="container">
+            <div class="container">
+                <table class="table table-hover table-responsive-md" style="color: white;">
+                    <thead class="text-center py-2">
+                        <tr>
+                            <th colspan="2">Your Order</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-5">Card Sub Total :</td>
+                            <td>Rs 400</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5">Order Total :</td>
+                            <td>Rs 500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="radioCard" class="container py-5 card my-5">
+            <div class="container card-header">
+                <h3>Payment Method</h3>
+            </div>
+            <hr>
+            <div class="container card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Cash On Deilivery
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Online
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-grid gap-2 my-4">
+                        <button class="btn btn-outline-warning" type="button">PAY NOW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <!-- Footer Start -->
