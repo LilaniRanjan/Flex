@@ -240,6 +240,14 @@ $con = $dbcon->getConnection();
                                             $i++;
                                             $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                         }
+                                    } else {
+//                                        if(isset($_SESSION['CusCart'])){
+//                                           foreach (CusCart as $key => $value){
+//                                               $rice_obj = new \classes\RiceDetails(null, null);
+//                                               $rice_detail = $rice_obj->GetRiceDetails($con);
+//                                               echo $rice_detail;
+//                                           }
+//                                        }
                                     }
                                     ?>
 
