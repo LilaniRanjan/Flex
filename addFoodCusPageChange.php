@@ -1,17 +1,24 @@
 <?php
 session_start();
+require_once './classes/DbConnector.php';
+require_once './classes/RiceDetails.php';
+require_once './classes/CurryDetails.php';
+require_once './classes/SpiceLevel.php';
+require_once './classes/PortionSize.php';
+require_once './classes/ExtraIngredients.php';
 
-// Check if the form is submitted
+$dbcon = new \classes\DbConnector();
+$con = $dbcon->getConnection();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
+
     $selectedRice = $_POST['rice'];
     $selectedCurry = isset($_POST['curry']) ? $_POST['curry'] : [];
     $selectedSpice = $_POST['spice'];
     $selectedPortion = $_POST['portion'];
     $selectedExtra = isset($_POST['extra']) ? $_POST['extra'] : [];
 
-    // Create an array to store the selected items
-    $foodItem = [
+    $foodItemId = [
         'rice' => $selectedRice,
         'curry' => $selectedCurry,
         'spice' => $selectedSpice,
@@ -19,16 +26,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'extra' => $selectedExtra,
     ];
 
-    // Check if the shopping cart session variable exists
-    if (!isset($_SESSION['CusCart'])) {
-        // If not, create it and initialize as an empty array
-        $_SESSION['cart'] = [];
+    $rice_obj = new \classes\RiceDetails(null, null);
+    $rice_detail = $rice_obj->getRiceDetailById($con, $selectedRice);
+
+    $curry_obj = new classes\CurryDetails(null, null);
+    $curry_detail = $curry_obj->getCurryDetailById($con, $selectedCurry);
+
+    $spicy_obj = new classes\SpiceLevel(null);
+    $spicy_detail = $spicy_obj->getSpicyDetailById($con, $selectedSpice);
+
+    $portion_obj = new \classes\PortionSize(null);
+    $portion_detail = $portion_obj->getPortionDetailById($con, $selectedPortion);
+
+    $extra_ingrediant_obj = new \classes\ExtraIngredients(null, null);
+    $extra_ingrediant_detail = $extra_ingrediant_obj->getExtraIngredientDetailById($con, $selectedExtra);
+
+    $foodItemName = [
+        'rice' => $rice_detail ? $rice_detail->getRice_name() : 'Not selected',
+        'curry' => $curry_detail ? $curry_detail->getCurry_name() : 'Not selected',
+        'spice' => $spicy_detail ? $spicy_detail->getSpice_level() : 'Not selected',
+        'portion' => $portion_detail ? $portion_detail->getPortion_size_name() : 'Not selected',
+        'extra' => $extra_ingrediant_detail ? $extra_ingrediant_detail->getExtra_ingredients_name() : 'Not selected'
+    ];
+
+    $foodItemPrice = [
+        'rice' => $rice_detail ? $rice_detail->getRice_price() : 0,
+        'curry' => $curry_detail ? $curry_detail->getCurry_price() : 0,
+        'spice' => 0,
+        'portion' => 0,
+        'extra' => $extra_ingrediant_detail ? $extra_ingrediant_detail->getExtra_ingredients_price() : 0
+    ];
+
+    if (!isset($_SESSION['CusCartId'])) {
+        $_SESSION['CusCartId'] = [];
+        $_SESSION['CusCartName'] = [];
+        $_SESSION['CusCartPrice'] = [];
     }
 
-    // Add the selected items to the shopping cart session
-    $_SESSION['CusCart'][] = $foodItem;
+    $_SESSION['CusCartId'][] = $foodItemId;
+    $_SESSION['CusCartName'][] = $foodItemName;
+    $_SESSION['CusCartPrice'][] = $foodItemPrice;
 
-    // Redirect to a confirmation page or back to the customization page
     header("Location: confirmationPage.php");
     exit();
 }
