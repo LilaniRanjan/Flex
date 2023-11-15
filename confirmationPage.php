@@ -53,7 +53,11 @@ if (isset($_SESSION['CusCartId']) && !empty($_SESSION['CusCartId'])) {
         
         echo "</ul>";
         
+<<<<<<< HEAD
         header("Location:index.php");
+=======
+//        header("Location:index.php");
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
     }
 } else {
     echo "<p>Your shopping CusCart is empty.</p>";

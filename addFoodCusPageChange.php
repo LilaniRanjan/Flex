@@ -81,24 +81,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     $selectedCurryPrice = array();
+<<<<<<< HEAD
     $curry_price_total = 0;
+=======
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
     if(!empty($_POST['curry'])){
         foreach ($_POST['curry'] as $curryId){
             $curry_obj = new classes\CurryDetails(null, null);
             $curry_detail = $curry_obj->getCurryDetailById($con, $curryId);
+<<<<<<< HEAD
             $curry_price = $curry_detail->getCurry_price();
             $curry_price_total = $curry_price_total + $curry_price;
             $selectedCurryPrice[] = $curry_price;
             $_SESSION['curry_price_total'] = $curry_price_total;
+=======
+            $selectedCurryPrice[] = $curry_detail->getCurry_price();
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
         }
     }
     
     $selectedExtraPrice = array();
+<<<<<<< HEAD
     $extra_price_total = 0;
+=======
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
     if(!empty($_POST['extra'])){
         foreach ($_POST['extra'] as $extraId){
             $extra_ingrediant_obj = new \classes\ExtraIngredients(null, null);
             $extra_detail = $extra_ingrediant_obj->getExtraIngredientDetailById($con, $extraId);
+<<<<<<< HEAD
             $extra_price = $extra_detail->getExtra_ingredients_price();
             $extra_price_total = $extra_price_total + $extra_price;
             $selectedExtraPrice[] = $extra_price_total;
@@ -107,6 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     $_SESSION['rice_price_total'] = $rice_detail->getRice_price();
+=======
+            $selectedExtraPrice[] = $extra_detail->getExtra_ingredients_price();
+        }
+    }
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
 
     $foodItemPrice = [
         'rice' => $rice_detail ? $rice_detail->getRice_price() : 0,
