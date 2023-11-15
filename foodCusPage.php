@@ -159,7 +159,7 @@ try {
 
         <!--main part Start-->
         <div class="container" id="container" style="">
-            <form action="addFoodCusPage.php" method="POST" style="width:100%">
+            <form action="addFoodCusPageChange.php" method="POST" style="width:100%">
                 <table>
                     <tr>
                         <th>
