@@ -243,6 +243,14 @@ $con = $dbcon->getConnection();
                                             $i++;
                                             $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                         }
+                                    } else {
+//                                        if(isset($_SESSION['CusCart'])){
+//                                           foreach (CusCart as $key => $value){
+//                                               $rice_obj = new \classes\RiceDetails(null, null);
+//                                               $rice_detail = $rice_obj->GetRiceDetails($con);
+//                                               echo $rice_detail;
+//                                           }
+//                                        }
                                     }
                                     ?>
                                 </tbody>
@@ -315,7 +323,11 @@ $con = $dbcon->getConnection();
                                                 </td>
 
                                                 <td style="background-color: black;color: white;">
+<<<<<<< HEAD
                                                     <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+                                                    <a href=""><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
                                                 </td>
                                             </tr>
                                             <?php
