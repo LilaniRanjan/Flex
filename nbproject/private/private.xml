@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Flex/Advertisment.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/login_process.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/CurryAddForm.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/checkout.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/cart.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/Login.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/index.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/SingleProduct.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/index.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/DeleteCusFood.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/classes/Advertisment.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/pre_order.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/confirmationPage.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/addFoodCusPageChange.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/cart.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/AddToCardFoodDelete.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/foodCusPage.php</file>
         </group>
     </open-files>
 </project-private>

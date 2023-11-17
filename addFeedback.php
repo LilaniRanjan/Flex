@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
 
@@ -56,54 +57,65 @@ $con = $dbcon->getConnection();
 
     <body id="bodyCon">
         <style>
-            #rounded-button{
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                font-weight: bold;
-                text-align: center;
-                text-transform: uppercase;
-                border: none;
-                border-radius: 20px; /* Adjust this value to control the roundness of the corners */
-                cursor: pointer;
+            body{
+                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+                font-size: 15px;
+            }
+
+            #tableEdit{
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
+            }
+
+            hr{
+                background-color: whitesmoke;
+            }
+            table{
+                background-color: #E88F2A;
+            }
+            td{
                 background-color: black;
-                color: #fff;
-                transition: background-color 0.3s ease;
-                border: 3px solid #E88F2A;
             }
 
-            #parastyle{
-                background-color: rgb(0,0,0, 0.7);
-
+            button{
+                border-color: #E88F2A;
             }
 
-            .feedback-button {
-                background-color: #000000; 
+            input[type="search"]::placeholder {
+                color: #999; /* Change to your desired placeholder text color */
+            }
+
+            .header{
+                background-color: #333;
+                color: wheat;
+            }
+            span{
+                color: wheat;
+            }
+            .header{
+                background-color: #333;
+                color: wheat;
+            }
+
+            body{
+                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+            }
+
+            #cardStyle{
+                background-color: rgba(0, 0, 0, 0.7);
                 color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
             }
-
-            .feedback-button:hover {
-                background-color: #2980b9; 
-            }
-            .quantity-input {
-                width: 70px; 
-                padding: 8px;
-                font-size: 16px;
-            }
-            
-            #styleOfContents{
-                background-color: rgb(0,0,0,0.8);
-                font-size: 18px;
+            #radioCard{
                 color: white;
-                border: 2px solid white;
-                border-radius: 25px;
+                background-color: rgb(0, 0, 0, 0.7);
+                border: 1px solid white;
             }
         </style>
+
 
         <!--Top Header-->
         <div class="wrap" id="wrap">
@@ -150,7 +162,7 @@ $con = $dbcon->getConnection();
                                     </a>
                                     <div class="d-flex flex-column ms-2">
                                         <span class="qty">0 Food</span>
-                                        <span class="fw-bold">Rs 0.00</span>
+                                        <span class="fw-bold">$0.00</span>
                                     </div>    
                                 </div> 
                             </div>
@@ -188,49 +200,35 @@ $con = $dbcon->getConnection();
                 </div>
             </nav>
         </div>
-        
-        
-        <!--Main Content Section-->
 
-        <?php 
-        if(isset($_GET["id"])){
-            $popular_food_id = $_GET["id"];
-            $popular_obj = new PopularFoodDetails(null, null, null, null, null);
-            $popular_detail = $popular_obj->getPopularFoodDetailById($con, $popular_food_id);
-            if ($popular_detail) {
-        ?>
-
-        <div class="container mt-5 py-5" id="styleOfContents">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" alt="Product Image" class="img-fluid p-5">
-                </div>
-                <div class="col-md-6 mt-5 pt-5">
-                    <h1 style="color: wheat;"><?php echo $popular_detail->getPopular_food_name(); ?></h1>
-                    <br>
-                    <p>
-                        <span class="px-3" style="color: whitesmoke;"><s>Rs <?php echo $popular_detail->getPopular_food_default_price(); ?></s></span>  
-                        <span class="px-3" style="color: whitesmoke;">Rs <?php echo $popular_detail->getPopular_food_current_price(); ?></span> 
-                    </p>
-                    <p class="py-4"><?php echo $popular_detail->getPopular_food_desc(); ?></p>
-                    
-                    <form action="AddToCard.php">
-                        <input type="hidden" name="id" value= '<?php echo $popular_food_id ?>' >
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control mb-2 quantity-input">
-                    
-                    
-                        <button class="btn btn-outline-warning mt-5" type='submit'>Add to Cart</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
         <?php
-            }
+        if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
+            $total = 0;
+            $i = 1;
         }
         ?>
 
+
+
+        <!--Main Content Section-->
+        <main class="main-container">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+                <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
+                    <div class="card-header text-center"><h4 style="color: #E88F2A;">ADD FEEDBACK</h4></div>
+                    <hr>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Example textarea</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                            </div>
+                            <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
 
         <!-- Footer Start -->
         <div class="container-fluid bg-img text-secondary bg-dark" style="margin-top: 115px; padding-bottom: 30 px;">

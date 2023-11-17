@@ -159,7 +159,7 @@ try {
 
         <!--main part Start-->
         <div class="container" id="container" style="">
-            <form action="addFoodCusPage.php" method="POST" style="width:100%">
+            <form action="addFoodCusPageChange.php" method="POST" style="width:100%">
                 <table>
                     <tr>
                         <th>
@@ -323,7 +323,7 @@ try {
                     ?>
                     <tr>
                         <td>
-                            <button name="submit" type="submit" style="border: 2px solid #E88F2A; color: wheat; font-size: 20px;" class="btn btn-order">Place Order - Total: Rs <?php echo $total_price; ?>.00</button>
+                            <button name="submit" type="submit" style="border: 2px solid #E88F2A; color: wheat; font-size: 20px;" class="btn btn-order">Place Order</button>
                         </td>
                     </tr>
                     <!-- Order Button -->

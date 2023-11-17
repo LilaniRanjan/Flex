@@ -162,7 +162,7 @@ $con = $dbcon->getConnection();
                                                     $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                                 }
                                                 echo $total;
-                                            }else{
+                                            } else {
                                                 echo 0;
                                             }
                                             ?>.00
@@ -354,9 +354,9 @@ $con = $dbcon->getConnection();
                                                     </div>						
                                                 </div>
                                             </div>	
-    <?php
-}
-?>
+                                            <?php
+                                        }
+                                        ?>
 
                                     </div>
                                 </div>
@@ -404,8 +404,35 @@ $con = $dbcon->getConnection();
                         </div>
                     </section>
 
-                    <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
+                    <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">ADD FEEDBACK</button>
                 </div>
+
+                <!--Model-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="background-color: rgb(0,0,0,0.7); color: white; border: 6px solid white;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">FEED BACK</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="feedback" style="font-size: 16px;">Give your Feedback :</label>
+                                        <textarea style="background-color: black; color: wheat; font-size:14px;" class="form-control" id="feedback" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+
                 <div class="row carousel-item">
                     <section id="feedbackCard" class="py-5 col-lg-4">
                         <div id="container">
@@ -510,9 +537,9 @@ $con = $dbcon->getConnection();
             </div>
 
         </div>
-<?php
+        <?php
 // put your code here
-?>
+        ?>
 
         <script src="./assets/js/jquery.min.js"></script>
         <script src="./assets/js/bootstrap.min.js"></script>

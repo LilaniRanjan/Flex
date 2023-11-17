@@ -142,7 +142,7 @@ $con = $dbcon->getConnection();
                                     </a>
                                     <div class="d-flex flex-column ms-2">
                                         <span class="qty">0 Food</span>
-                                        <span class="fw-bold">$0.00</span>
+                                        <span class="fw-bold">Rs 0.00</span>
                                     </div>    
                                 </div> 
                             </div>
@@ -185,6 +185,7 @@ $con = $dbcon->getConnection();
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
             $total = 0;
+            $curry_total = 0;
             $i = 1;
         }
         ?>
@@ -204,6 +205,8 @@ $con = $dbcon->getConnection();
                 <div>
                     <div class="charts my-4">
 
+                        <h2 style="text-align: center;">Popular Foods</h2>
+                        <br>
                         <div class="charts-cardss table-responsive">
                             <table class="table table-hover table-responsive-md">
                                 <thead class="text-center py-2">
@@ -242,12 +245,88 @@ $con = $dbcon->getConnection();
                                         }
                                     }
                                     ?>
-
                                 </tbody>
-
-
                             </table>
                         </div>
+
+                        <br>
+                        <br>
+
+                        <h2 style="text-align: center;">Customize Food</h2>
+                        <br>
+                        <div class="charts-cardss table-responsive">
+                            <table class="table table-hover table-responsive-md">
+                                <thead class="text-center py-2">
+                                    <tr>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">INGREDIENTS</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">PRICE</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">TOTAL</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="text-center">
+                                    <?php
+                                    if (isset($_SESSION['CusCartId']) && !empty($_SESSION['CusCartId'])) {
+                                        $i = 1;
+                                        foreach ($_SESSION['CusCartId'] as $index => $foodId) {
+                                            ?>
+                                            <tr>
+                                                <td style="background-color: black; color: white;"><?php echo $i; ?></td>
+                                                <td style="background-color: black; color: white; text-align: left;">
+                                                    <?php
+                                                    echo '<li>RICE: ' . (isset($_SESSION['CusCartName'][$index]['rice']) ? $_SESSION['CusCartName'][$index]['rice'] : 'Not selected') . '</li>';
+                                                    echo '<li>CURRY: ' . (isset($_SESSION['CusCartName'][$index]['curry']) && is_array($_SESSION['CusCartName'][$index]['curry']) ? implode(', ', $_SESSION['CusCartName'][$index]['curry']) : 'Not selected') . '</li>';
+                                                    echo '<li>SPICE LEVEL: ' . (isset($_SESSION['CusCartName'][$index]['spice']) ? $_SESSION['CusCartName'][$index]['spice'] : 'Not selected') . '</li>';
+                                                    echo '<li>PORTION SIZE: ' . (isset($_SESSION['CusCartName'][$index]['portion']) ? $_SESSION['CusCartName'][$index]['portion'] : 'Not selected') . '</li>';
+                                                    echo '<li>EXTRA INGREDIENTS: ' . (isset($_SESSION['CusCartName'][$index]['extra']) && is_array($_SESSION['CusCartName'][$index]['extra']) ? implode(', ', $_SESSION['CusCartName'][$index]['extra']) : 'Not selected') . '</li>';
+                                                    ?>
+                                                </td>
+                                                <td style="background-color: black; color: white; text-align: left;">
+                                                    <?php
+                                                    $total_curry_price = 0;
+                                                    echo '<li>RICE: ' . (isset($_SESSION['CusCartPrice'][$index]['rice']) ? $_SESSION['CusCartPrice'][$index]['rice'] : 'Not selected') . '</li>';
+                                                    echo '<li>CURRY: ' . (isset($_SESSION['CusCartPrice'][$index]['curry']) && is_array($_SESSION['CusCartPrice'][$index]['curry']) ? implode(', ', $_SESSION['CusCartPrice'][$index]['curry']) : 'Not selected') . '</li>';
+                                                    echo '<li>EXTRA INGREDIENTS: ' . (isset($_SESSION['CusCartPrice'][$index]['extra']) && is_array($_SESSION['CusCartPrice'][$index]['extra']) ? implode(', ', $_SESSION['CusCartPrice'][$index]['extra']) : 'Not selected') . '</li>';
+                                                    ?>
+                                                </td>
+                                                <td style="background-color: black; color: white;">
+                                                    <?php
+                                                    $totalCustomizedPrice = 0;
+
+                                                    $ricePrice = is_numeric($_SESSION['CusCartPrice'][$index]['rice']) ? $_SESSION['CusCartPrice'][$index]['rice'] : 0;
+                                                    $totalCustomizedPrice += $ricePrice;
+
+                                                    if (is_array($_SESSION['CusCartPrice'][$index]['curry'])) {
+                                                        foreach ($_SESSION['CusCartPrice'][$index]['curry'] as $curry) {
+                                                            $totalCustomizedPrice += is_numeric($curry) ? $curry : 0;
+                                                        }
+                                                    }
+
+                                                    if (is_array($_SESSION['CusCartPrice'][$index]['extra'])) {
+                                                        foreach ($_SESSION['CusCartPrice'][$index]['extra'] as $extra) {
+                                                            $totalCustomizedPrice += is_numeric($extra) ? $extra : 0;
+                                                        }
+                                                    }
+
+                                                    echo $totalCustomizedPrice.".00";
+                                                    ?>
+                                                </td>
+
+                                                <td style="background-color: black;color: white;">
+                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                        }
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -257,7 +336,13 @@ $con = $dbcon->getConnection();
             <div class="card">
                 <div class="card-header">Total</div>
                 <div class="card-body">
-                    Total Amount : Rs <?php if(isset($_SESSION['cart'])){echo $total;} else {echo 0;} ?>.00 
+                    Total Amount : Rs <?php
+                    if (isset($_SESSION['cart'])) {
+                        echo $total;
+                    } else {
+                        echo 0;
+                    }
+                    ?>.00 
                 </div>
             </div>
         </div>
