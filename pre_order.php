@@ -100,7 +100,7 @@ $dbcon = new DbConnector();
                                         </a>
                                         <div class="d-flex flex-column ms-2">
                                             <span class="qty">0 Food</span>
-                                            <span class="fw-bold">$0.00</span>
+                                            <span class="fw-bold">Rs 0.00</span>
                                         </div>    
                                     </div> 
                                 </div>
