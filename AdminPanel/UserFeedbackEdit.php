@@ -1,8 +1,14 @@
 <?php
-require_once '../classes/PopularFoodDetails.php';
-require_once '../classes/DbConnector.php';
+ob_start();
+require '../classes/CurryDetails.php';
+require '../classes/DbConnector.php';
 
-$dbcon = new \classes\DbConnector();
+try {
+    $db_obj = new classes\DbConnector();
+    $con = $db_obj->getConnection();
+} catch (PDOException $exc) {
+    echo "Error in CurryAddForm File Db Connection: " . $exc->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +32,6 @@ $dbcon = new \classes\DbConnector();
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../assets/css/AdminPanel.css">
-        <link rel="stylesheet" href="../assets/css/CustomizeFoodStyle.css">
 
         <!-- Fontawesome Icon -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -34,21 +39,22 @@ $dbcon = new \classes\DbConnector();
     </head>
     <body>
         <style>
-            body{
-                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
-            }
-            
             .header{
                 background-color: #333;
                 color: wheat;
             }
-            
-            .panel{
-                background-color: rgba(0, 0, 0, 0.9);
-                border: 3px solid #E88F2A;
+
+            body{
+                background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
+            }
+
+            #cardStyle{
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
             }
         </style>
-
         <div class="grid-container">
 
             <!-- Header -->
@@ -86,8 +92,8 @@ $dbcon = new \classes\DbConnector();
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="View_poll.php" style="color: wheat;">
-                            <span class="material-icons-outlined">poll</span> Voting Poll
+                        <a href="#" style="color: wheat;">
+                            <span class="material-icons-outlined">fact_check</span> Manage Transaction 
                         </a>
                     </li>
                     <li class="disabled" style="padding: 45px 20px 20px 20px;">
@@ -115,20 +121,68 @@ $dbcon = new \classes\DbConnector();
             <!-- End Sidebar -->
 
             <!-- Main -->
-            <div class="dashboard">
-                <div class="panel rice-panel">
-                    <i class="fas fa-utensils panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminPopularFoodManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">POPULAR FOODS</h2></a>
+            <main class="main-container">
+                <div class="main-title">
+                    <p class="font-weight-bold"></p>
                 </div>
-                <div class="panel curry-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminUserFeedback.php" id="Textdecoration"><h2 style="color: #E88F2A;">FEED BACK</h2></a>
-                </div>
-                <div class="panel spice-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="AdminAddAdvertisment.php" id="Textdecoration"><h2 style="color: #E88F2A;">ADVERTISMENT</h2></a>
-                </div>
-            </div>
+                <?php
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+                    if (isset($_POST['curry_name'], $_POST['curry_price'])) {
+                        $curry_name = $_POST['curry_name'];
+                        $curry_price = $_POST['curry_price'];
+
+                        try {
+                            $curry_detail = new \classes\CurryDetails($curry_name, $curry_price);
+                            $curry = $curry_detail->addCurryDetails($con);
+                            if ($curry) {
+                                header("Location: AdminCurryManage.php");
+                                ob_end_flush();
+                            } else {
+                                ?>
+                                <div class="alert alert-danger" role="alert">
+                                    Added Failed!
+                                </div>
+                                <?php
+                            }
+                        } catch (PDOException $exc) {
+                            ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo "An error occurred: " . $exc->getMessage(); ?>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            ERROR OCCUR!
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+                    <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
+                        <div class="card-header text-center"><h4 style="color: #E88F2A;">CHANGE VISIBILITY STATUS</h4></div>
+                        <hr>
+                        <div class="card-body">
+                            <div class="card-body">
+                                <div class="form-group my-2">
+                                    <label for="visbile">Curry Name :</label>
+                                </div>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="background-color: black; color: white;">
+                                    <option selected>Change visible status</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <br>
+                                <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">CHANGE STATUS</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </main>
             <!-- End Main -->
 
         </div>
