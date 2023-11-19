@@ -5,18 +5,29 @@ namespace classes;
 use PDO;
 
 class UserFeedBack {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
     private $feedback_id;
     private $userId;
     private $user_feedback;
     private $visbility_option;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
     function __construct($userId, $user_feedback, $visbility_option) {
         $this->userId = $userId;
         $this->user_feedback = $user_feedback;
         $this->visbility_option = $visbility_option;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
     function getFeedback_id() {
         return $this->feedback_id;
     }
@@ -49,20 +60,32 @@ class UserFeedBack {
         $this->visbility_option = $visbility_option;
     }
 
+<<<<<<< HEAD
     public function addFeedBack($con) {
         try {
+=======
+    public function addFeedBack($con){
+        try{
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
             $query = "INSERT INTO feedback (feedback, visible_option, user_id) VALUES (?, ?, ?)";
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $this->user_feedback);
             $pstmt->bindValue(2, $this->visbility_option);
             $pstmt->bindValue(3, $this->userId);
+<<<<<<< HEAD
 
             return $pstmt->execute();
         } catch (PDOException $exc) {
+=======
+                    
+            return $pstmt->execute();
+        } catch (PDOException $exc){
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
             die("ERROR in addFeedBack Function" . $exc->getMessage());
         }
     }
 
+<<<<<<< HEAD
     public static function getAllFeedBack($con) {
         try {
             $querry = "SELECT * FROM feedback";
@@ -116,4 +139,6 @@ class UserFeedBack {
         }
     }
 
+=======
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
 }
