@@ -243,6 +243,14 @@ $con = $dbcon->getConnection();
                                             $i++;
                                             $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                         }
+                                    } else {
+//                                        if(isset($_SESSION['CusCart'])){
+//                                           foreach (CusCart as $key => $value){
+//                                               $rice_obj = new \classes\RiceDetails(null, null);
+//                                               $rice_detail = $rice_obj->GetRiceDetails($con);
+//                                               echo $rice_detail;
+//                                           }
+//                                        }
                                     }
                                     ?>
                                 </tbody>
@@ -311,13 +319,46 @@ $con = $dbcon->getConnection();
                                                     }
 
                                                     echo $totalCustomizedPrice.".00";
+<<<<<<< HEAD
                                                     
                                                     $total = $total + $totalCustomizedPrice;
+=======
+<<<<<<< HEAD
+                                                    
+                                                    $total = $total + $totalCustomizedPrice;
+=======
+<<<<<<< HEAD
+                                                    
+                                                    $total = $total + $totalCustomizedPrice;
+=======
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
                                                     ?>
                                                 </td>
 
                                                 <td style="background-color: black;color: white;">
+<<<<<<< HEAD
                                                     <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+<<<<<<< HEAD
+                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+<<<<<<< HEAD
+                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+<<<<<<< HEAD
+                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+<<<<<<< HEAD
+                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+=======
+                                                    <a href=""><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
                                                 </td>
                                             </tr>
                                             <?php

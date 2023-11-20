@@ -5,18 +5,41 @@ namespace classes;
 use PDO;
 
 class UserFeedBack {
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
     private $feedback_id;
     private $userId;
     private $user_feedback;
     private $visbility_option;
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+    
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
     function __construct($userId, $user_feedback, $visbility_option) {
         $this->userId = $userId;
         $this->user_feedback = $user_feedback;
         $this->visbility_option = $visbility_option;
     }
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+    
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
     function getFeedback_id() {
         return $this->feedback_id;
     }
@@ -49,20 +72,46 @@ class UserFeedBack {
         $this->visbility_option = $visbility_option;
     }
 
+<<<<<<< HEAD
     public function addFeedBack($con) {
         try {
+=======
+<<<<<<< HEAD
+    public function addFeedBack($con) {
+        try {
+=======
+    public function addFeedBack($con){
+        try{
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
             $query = "INSERT INTO feedback (feedback, visible_option, user_id) VALUES (?, ?, ?)";
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $this->user_feedback);
             $pstmt->bindValue(2, $this->visbility_option);
             $pstmt->bindValue(3, $this->userId);
+<<<<<<< HEAD
 
             return $pstmt->execute();
         } catch (PDOException $exc) {
+=======
+<<<<<<< HEAD
+
+            return $pstmt->execute();
+        } catch (PDOException $exc) {
+=======
+                    
+            return $pstmt->execute();
+        } catch (PDOException $exc){
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
             die("ERROR in addFeedBack Function" . $exc->getMessage());
         }
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
     public static function getAllFeedBack($con) {
         try {
             $querry = "SELECT * FROM feedback";
@@ -110,11 +159,19 @@ class UserFeedBack {
             $query = "UPDATE feedback SET visible_option = ? WHERE feed_back_id = ?";
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $this->visbility_option);
+<<<<<<< HEAD
             $pstmt->bindValue(2, $id);
+=======
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
             return $pstmt->execute();
         } catch (Exception $exc) {
             die("ERROR in updateUserFeedackVisibleOption Function" . $exc->getMessage());
         }
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
 }
