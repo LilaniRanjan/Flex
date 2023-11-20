@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Flex/Advertisment.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/login_process.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/AdminPanel/CurryAddForm.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/checkout.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/cart.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/Login.php</file>
-            <file>file:/C:/xampp/htdocs/Flex/index.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/AdminPanel/AdminUserFeedback.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/classes/UserFeedBack.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/AdminPanel/UserFeedbackEdit.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/foodCusPage.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/AdminPanel/CurryAddForm.php</file>
+            <file>file:/C:/xampp/htdocs/Flex_New/classes/RiceDetails.php</file>
         </group>
     </open-files>
 </project-private>

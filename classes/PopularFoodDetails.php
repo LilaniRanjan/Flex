@@ -57,7 +57,7 @@ class PopularFoodDetails {
     }
 
     public function addPopularFoodDetails($con) {
-        $query = "INSERT INTO popularfooddetails (popular_food_image_file, popular_food_name, popular_food_default_price, popular_food_current_price, popula_food_vote) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO popularfooddetails (popular_food_image_file, popular_food_name, popular_food_default_price, popular_food_current_price, popullar_food_desc) VALUES (?, ?, ?, ?, ?)";
         $pstmt = $con->prepare($query);
         $pstmt->bindValue(1, $this->popular_food_image_file);
         $pstmt->bindValue(2, $this->popular_food_name);
