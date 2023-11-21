@@ -81,24 +81,137 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     $selectedCurryPrice = array();
+<<<<<<< HEAD
     $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+<<<<<<< HEAD
+    $curry_price_total = 0;
+=======
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
     if(!empty($_POST['curry'])){
         foreach ($_POST['curry'] as $curryId){
             $curry_obj = new classes\CurryDetails(null, null);
             $curry_detail = $curry_obj->getCurryDetailById($con, $curryId);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
             $curry_price = $curry_detail->getCurry_price();
             $curry_price_total = $curry_price_total + $curry_price;
             $selectedCurryPrice[] = $curry_price;
             $_SESSION['curry_price_total'] = $curry_price_total;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+            $selectedCurryPrice[] = $curry_detail->getCurry_price();
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
         }
     }
     
     $selectedExtraPrice = array();
+<<<<<<< HEAD
     $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+<<<<<<< HEAD
+    $extra_price_total = 0;
+=======
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
     if(!empty($_POST['extra'])){
         foreach ($_POST['extra'] as $extraId){
             $extra_ingrediant_obj = new \classes\ExtraIngredients(null, null);
             $extra_detail = $extra_ingrediant_obj->getExtraIngredientDetailById($con, $extraId);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
             $extra_price = $extra_detail->getExtra_ingredients_price();
             $extra_price_total = $extra_price_total + $extra_price;
             $selectedExtraPrice[] = $extra_price_total;
@@ -107,6 +220,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     $_SESSION['rice_price_total'] = $rice_detail->getRice_price();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+            $selectedExtraPrice[] = $extra_detail->getExtra_ingredients_price();
+        }
+    }
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
 
     $foodItemPrice = [
         'rice' => $rice_detail ? $rice_detail->getRice_price() : 0,

@@ -410,6 +410,16 @@ $con = $dbcon->getConnection();
                 <!--Model-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
                         <form action="UserFeedBack.php" method="POST">
                             <div class="modal-content" style="background-color: rgb(0,0,0,0.7); color: white; border: 6px solid white;">
                                 <div class="modal-header">
@@ -431,6 +441,36 @@ $con = $dbcon->getConnection();
                                 </div>
                             </div>
                         </form>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+                        <div class="modal-content" style="background-color: rgb(0,0,0,0.7); color: white; border: 6px solid white;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">FEED BACK</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="feedback" style="font-size: 16px;">Give your Feedback :</label>
+                                        <textarea style="background-color: black; color: wheat; font-size:14px;" class="form-control" id="feedback" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD</button>
+                            </div>
+                        </div>
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
                     </div>
                 </div> 
 

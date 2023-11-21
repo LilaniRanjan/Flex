@@ -1,6 +1,14 @@
 <?php
 ob_start();
+<<<<<<< HEAD
 require '../classes/UserFeedBack.php';
+=======
+<<<<<<< HEAD
+require '../classes/UserFeedBack.php';
+=======
+require '../classes/CurryDetails.php';
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
 require '../classes/DbConnector.php';
 
 try {
@@ -9,8 +17,16 @@ try {
 } catch (PDOException $exc) {
     echo "Error in CurryAddForm File Db Connection: " . $exc->getMessage();
 }
+<<<<<<< HEAD
 
 $id = isset($_GET['id']) ? $_GET['id'] : null;
+=======
+<<<<<<< HEAD
+
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+=======
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
 ?>
 
 <!DOCTYPE html>
@@ -129,11 +145,55 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                 </div>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
                     $visible_option = $_POST['visibleoption'];
                     
                     $user_feedback_obj = new classes\UserFeedBack(null, null, $visible_option);
                     $user_feedback = $user_feedback_obj->updateUserFeedackVisibleOption($con, $id);
                     
+<<<<<<< HEAD
+=======
+                    if($user_feedback){
+                        echo 'Updated Success';
+                    } else {
+                        echo 'Updated Failed';
+=======
+                    if (isset($_POST['curry_name'], $_POST['curry_price'])) {
+                        $curry_name = $_POST['curry_name'];
+                        $curry_price = $_POST['curry_price'];
+
+                        try {
+                            $curry_detail = new \classes\CurryDetails($curry_name, $curry_price);
+                            $curry = $curry_detail->addCurryDetails($con);
+                            if ($curry) {
+                                header("Location: AdminCurryManage.php");
+                                ob_end_flush();
+                            } else {
+                                ?>
+                                <div class="alert alert-danger" role="alert">
+                                    Added Failed!
+                                </div>
+                                <?php
+                            }
+                        } catch (PDOException $exc) {
+                            ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo "An error occurred: " . $exc->getMessage(); ?>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            ERROR OCCUR!
+                        </div>
+                        <?php
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+                    }
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
                 }
                 ?>
 
@@ -144,9 +204,21 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="form-group my-2">
+<<<<<<< HEAD
                                     <label for="visbile">Change visible status :</label>
                                 </div>
                                 <select name="visibleoption" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="background-color: black; color: white;">
+=======
+<<<<<<< HEAD
+                                    <label for="visbile">Change visible status :</label>
+                                </div>
+                                <select name="visibleoption" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="background-color: black; color: white;">
+=======
+                                    <label for="visbile">Curry Name :</label>
+                                </div>
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="background-color: black; color: white;">
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
                                     <option selected>Change visible status</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>

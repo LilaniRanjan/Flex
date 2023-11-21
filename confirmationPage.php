@@ -53,7 +53,35 @@ if (isset($_SESSION['CusCartId']) && !empty($_SESSION['CusCartId'])) {
         
         echo "</ul>";
         
+<<<<<<< HEAD
         header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+<<<<<<< HEAD
+        header("Location:index.php");
+=======
+//        header("Location:index.php");
+>>>>>>> 1e5e1cae7e744ae2c21a422c8e72517287557829
+>>>>>>> 14b0cae0efb08032d1071e969e23a9c09544a004
+>>>>>>> 68b6797374511dfcf5294a477246b649025ae7d5
+>>>>>>> 08ba167bfd369a119cf578384500b427644e8af3
+>>>>>>> 249c05b3c0124672f7ae1691d55c4aac7c19ee82
+>>>>>>> 326ac6510199d7842d67113b2c8122167ae2d165
+>>>>>>> 27c2edbfde1cde670d9e64763e06462667594267
     }
 } else {
     echo "<p>Your shopping CusCart is empty.</p>";
