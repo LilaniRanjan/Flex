@@ -91,6 +91,7 @@ try {
                     </div>
                 </div>
             </div>
+            Hello
             <div>
                 <section class="header-main" style="color: white;">
                     <div class="container-fluid">
@@ -159,7 +160,7 @@ try {
 
         <!--main part Start-->
         <div class="container" id="container" style="">
-            <form action="addFoodCusPage.php" method="POST" style="width:100%">
+            <form action="addFoodCusPageChange.php" method="POST" style="width:100%">
                 <table>
                     <tr>
                         <th>
@@ -198,10 +199,10 @@ try {
                     </fieldset>
                     
                     <!-- Curry Selection -->
-                    <fieldset>
+                    <fieldset class="mt-5">
                         <tr>
                             <th>
-                        <legend><h4>Curry Selection</h4></legend>
+                        <legend><h4 style="color: wheat;">Curry Selection</h4></legend>
                         </th>
                         </tr>
                         <div class="option-group">
@@ -229,14 +230,14 @@ try {
 
 
                     <!-- Spice Level -->
-                    <div class="option-group">
+                    <div class="option-group mt-5">
                         <tr>
                             <td>
                                 <div class="option-group">
                                     <h4>
-                                        <label for="spice">Spice Level:</label>
+                                        <label for="spice" style="color: wheat;">Spice Level:</label>
                                     </h4>
-                                    <select name="spice" class="custom-select" id="spice">
+                                    <select name="spice" class="form-select form-select-lg mb-3" id="spice" style="background-color: black; color: white;">
                                         <?php 
                                             try{
                                                 $rs3 = classes\SpiceLevel::GetSpicyDetails($con);
@@ -257,14 +258,15 @@ try {
                         </tr>
                     </div>
 
+                   
                     <!-- Portion Size -->
-                    <div class="option-group">
+                    <div class="option-group mt-5">
                         <tr>
                             <td>
                                 <h4>
-                                    <label for="portion">Portion Size:</label>
+                                    <label for="portion" style="color: wheat;">Portion Size:</label>
                                 </h4>
-                                <select name="portion" class="custom-select" id="spice">
+                                <select name="portion" class="form-select form-select-lg mb-3" id="spice" style="background-color: black; color: white;">
                                     <?php 
                                     try{
                                         $rs4 = classes\PortionSize::GetPortionSizeDetails($con);
@@ -287,7 +289,7 @@ try {
                     <fieldset>
                         <tr>
                             <th>
-                        <legend><h4>Extra Ingredients</h4></legend>
+                        <legend><h4 style="color: wheat;">Extra Ingredients</h4></legend>
                         </th>
                         </tr>
                         <div class="option-group">
@@ -323,7 +325,7 @@ try {
                     ?>
                     <tr>
                         <td>
-                            <button name="submit" type="submit" style="border: 2px solid #E88F2A; color: wheat; font-size: 20px;" class="btn btn-order">Place Order - Total: Rs <?php echo $total_price; ?>.00</button>
+                            <button name="submit" type="submit" style="border: 2px solid #E88F2A; color: wheat; font-size: 20px;" class="btn btn-order">Place Order</button>
                         </td>
                     </tr>
                     <!-- Order Button -->
