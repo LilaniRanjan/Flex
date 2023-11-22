@@ -131,6 +131,25 @@ class User {
             return "Error in User class's authenticate function: " . $exc->getMessage();
         }
     }
+    
+    public function getUserByThemUserId($con, $user_id){
+        try{
+            $query = "SELECT * FROM user WHERE user_id = ?";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindValue(1, $user_id);
+            $pstmt->execute();
+            
+            $row = $pstmt->fetch(PDO::FETCH_OBJ);
+            
+            if($row){
+                return new User($row->user_id, $row->first_name, $row->last_name, $row->email_address, $row->phone_number, $row->password, $row->role);
+            } else {
+                return null;
+            }
+        } catch (Exception $exc){
+            die("Error in User class's getUserByThemUserId function: " . $exc->getMessage());
+        }
+    }
 
     public function update($dbcon) {
         

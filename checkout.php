@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once './classes/PopularFoodDetails.php';
+require_once './classes/User.php';
 require_once './classes/DbConnector.php';
 
 $dbcon = new \classes\DbConnector();
@@ -210,47 +210,53 @@ $con = $dbcon->getConnection();
         ?>
 
 
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $user_obj = new classes\User($user_id, null, null, null, null, null, null);
+            $user_detail = $user_obj->getUserByThemUserId($con, $_SESSION['user_id']);
 
-        <!--Main Content Section-->
-        <main class="main-container">
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-                <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
-                    <div class="card-header text-center"><h4 style="color: #E88F2A;">BILLING DETAILS</h4></div>
-                    <hr>
-                    <div class="card-body">
-                        <div class="card-body">
-                            <div class="form-group my-2">
-                                <label for="first_name">First Name :</label>
-                                <input style="background-color: black; color: white;" name="first_name" type="text" id="first_name" class="form-control" required/>  
+            if ($user_detail) {
+                ?>
+                <!--Main Content Section-->
+                <main class="main-container">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+                        <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
+                            <div class="card-header text-center"><h4 style="color: #E88F2A;">BILLING DETAILS</h4></div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="card-body">
+                                    <div class="form-group my-2">
+                                        <label for="first_name">First Name :</label>
+                                        <input style="background-color: black; color: white;" name="first_name" type="text" id="first_name" class="form-control" value="<?php echo $user_detail->getFirstName(); ?>" required/>  
+                                    </div>
+                                    <br>
+                                    <div class="form-group my-2">
+                                        <label for="last_name">Last Name :</label>
+                                        <input style="background-color: black; color: white;" name="last_name" type="text" id="last_name" class="form-control" value="<?php echo $user_detail->getLastName(); ?>" required/>
+                                    </div>
+                                    <br>
+                                    <div class="form-group my-2">
+                                        <label for="email">E-mail Address :</label>
+                                        <input style="background-color: black; color: white;" name="email" type="email" id="email" class="form-control" value="<?php echo $user_detail->getEmailAddress(); ?>" required/>
+                                    </div>
+                                    <br>
+                                    <div class="form-group my-2">
+                                        <label for="phone_number">Phone number :</label>
+                                        <input style="background-color: black; color: white;" name="phone_number" type="number" id="phone_number" class="form-control" value="<?php echo $user_detail->getPhoneNumber(); ?>" required/>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
+                                </div>
                             </div>
-                            <br>
-                            <div class="form-group my-2">
-                                <label for="last_name">Last Name :</label>
-                                <input style="background-color: black; color: white;" name="last_name" type="text" id="last_name" class="form-control" required/>
-                            </div>
-                            <br>
-                            <div class="form-group my-2">
-                                <label for="address">Address :</label>
-                                <input style="background-color: black; color: white;" name="address" type="text" id="address" class="form-control" required/>
-                            </div>
-                            <br>
-                            <div class="form-group my-2">
-                                <label for="email">E-mail Address :</label>
-                                <input style="background-color: black; color: white;" name="email" type="email" id="email" class="form-control" required/>
-                            </div>
-                            <br>
-                            <div class="form-group my-2">
-                                <label for="phone_number">Phone number :</label>
-                                <input style="background-color: black; color: white;" name="phone_number" type="number" id="phone_number" class="form-control" required/>
-                            </div>
-                            <br>
-                            <br>
-                            <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
                         </div>
-                    </div>
-                </div>
-            </form>
-        </main>
+                    </form>
+                </main>
+                <?php
+            }
+        }
+        ?>
 
         <div class="container">
             <div class="container">
@@ -262,12 +268,14 @@ $con = $dbcon->getConnection();
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="px-5">Card Sub Total :</td>
-                            <td>Rs 400</td>
-                        </tr>
-                        <tr>
                             <td class="px-5">Order Total :</td>
-                            <td>Rs 500</td>
+                            <td>
+                                <?php
+                                if (isset($_SESSION['payment_total_amount'])) {
+                                    echo "Rs ".$_SESSION['payment_total_amount'].".00";
+                                }
+                                ?>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
