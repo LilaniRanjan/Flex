@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
 
@@ -95,7 +96,7 @@ $con = $dbcon->getConnection();
                 padding: 8px;
                 font-size: 16px;
             }
-            
+
             #styleOfContents{
                 background-color: rgb(0,0,0,0.8);
                 font-size: 18px;
@@ -149,15 +150,41 @@ $con = $dbcon->getConnection();
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty">0 Food</span>
-                                        <span class="fw-bold">Rs 0.00</span>
+                                        <span class="qty">
+                                            <?php
+                                            if(isset($_SESSION['total_food_count'])){
+                                                echo $_SESSION['total_food_count'];
+                                            } else {
+                                                echo '0';
+                                            }
+                                            ?>
+                                            Food</span>
+                                        <span class="fw-bold">
+                                            <?php
+                                            if (isset($_SESSION['payment_total_amount'])) {
+                                                echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                            } else {
+                                                echo '0.00';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>    
                                 </div> 
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                <?php
+                                if (isset($_SESSION['user_id'])) {
+                                    ?>
+                                    <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                    <?php
+                                }
+                                ?>
                             </div> 
                         </div>
                     </div>
@@ -188,45 +215,45 @@ $con = $dbcon->getConnection();
                 </div>
             </nav>
         </div>
-        
-        
+
+
         <!--Main Content Section-->
 
-        <?php 
-        if(isset($_GET["id"])){
+        <?php
+        if (isset($_GET["id"])) {
             $popular_food_id = $_GET["id"];
             $popular_obj = new PopularFoodDetails(null, null, null, null, null);
             $popular_detail = $popular_obj->getPopularFoodDetailById($con, $popular_food_id);
             if ($popular_detail) {
-        ?>
+                ?>
 
-        <div class="container mt-5 py-5" id="styleOfContents">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" alt="Product Image" class="img-fluid p-5">
+                <div class="container mt-5 py-5" id="styleOfContents">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" alt="Product Image" class="img-fluid p-5">
+                        </div>
+                        <div class="col-md-6 mt-5 pt-5">
+                            <h1 style="color: wheat;"><?php echo $popular_detail->getPopular_food_name(); ?></h1>
+                            <br>
+                            <p>
+                                <span class="px-3" style="color: whitesmoke;"><s>Rs <?php echo $popular_detail->getPopular_food_default_price(); ?></s></span>  
+                                <span class="px-3" style="color: whitesmoke;">Rs <?php echo $popular_detail->getPopular_food_current_price(); ?></span> 
+                            </p>
+                            <p class="py-4"><?php echo $popular_detail->getPopular_food_desc(); ?></p>
+
+                            <form action="AddToCard.php">
+                                <input type="hidden" name="id" value= '<?php echo $popular_food_id ?>' >
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" id="quantity" name="quantity" class="form-control mb-2 quantity-input">
+
+
+                                <button class="btn btn-outline-warning mt-5" type='submit'>Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 mt-5 pt-5">
-                    <h1 style="color: wheat;"><?php echo $popular_detail->getPopular_food_name(); ?></h1>
-                    <br>
-                    <p>
-                        <span class="px-3" style="color: whitesmoke;"><s>Rs <?php echo $popular_detail->getPopular_food_default_price(); ?></s></span>  
-                        <span class="px-3" style="color: whitesmoke;">Rs <?php echo $popular_detail->getPopular_food_current_price(); ?></span> 
-                    </p>
-                    <p class="py-4"><?php echo $popular_detail->getPopular_food_desc(); ?></p>
-                    
-                    <form action="AddToCard.php">
-                        <input type="hidden" name="id" value= '<?php echo $popular_food_id ?>' >
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control mb-2 quantity-input">
-                    
-                    
-                        <button class="btn btn-outline-warning mt-5" type='submit'>Add to Cart</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <?php
+
+                <?php
             }
         }
         ?>

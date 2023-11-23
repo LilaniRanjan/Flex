@@ -158,19 +158,45 @@ if ($_SESSION['user_id']) {
                             <div class="col-md-2">
                                 <div class="float-right">
                                     <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                        <a href="#">
+                                        <a href="cart.php">
                                             <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                         </a>
                                         <div class="d-flex flex-column ms-2">
-                                            <span class="qty">0 Food</span>
-                                            <span class="fw-bold">$0.00</span>
+                                            <span class="qty">
+                                                <?php
+                                                if (isset($_SESSION['total_food_count'])) {
+                                                    echo $_SESSION['total_food_count'];
+                                                } else {
+                                                    echo '0';
+                                                }
+                                                ?>
+                                                Food</span>
+                                            <span class="fw-bold">
+                                                <?php
+                                                if (isset($_SESSION['payment_total_amount'])) {
+                                                    echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                                } else {
+                                                    echo '0.00';
+                                                }
+                                                ?>
+                                            </span>
                                         </div>    
                                     </div> 
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                    <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                    <?php
+                                    if (isset($_SESSION['user_id'])) {
+                                        ?>
+                                        <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                        <?php
+                                    }
+                                    ?>
                                 </div> 
                             </div>
                         </div>

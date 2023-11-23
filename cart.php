@@ -141,15 +141,42 @@ $con = $dbcon->getConnection();
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty">0 Food</span>
-                                        <span class="fw-bold">Rs 0.00</span>
+                                        <span class="qty">
+                                            <?php
+                                            if(isset($_SESSION['total_food_count'])){
+                                                echo $_SESSION['total_food_count'];
+                                            } else {
+                                                echo '0';
+                                            }
+                                            ?>
+                                            Food
+                                        </span>
+                                        <span class="fw-bold">
+                                            <?php
+                                            if (isset($_SESSION['payment_total_amount'])) {
+                                                echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                            } else {
+                                                echo '0.00';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>    
                                 </div> 
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                <?php 
+                                    if(isset($_SESSION['user_id'])){
+                                        ?>
+                                        <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                        <?php
+                                    }
+                                ?>
                             </div> 
                         </div>
                     </div>
@@ -240,7 +267,9 @@ $con = $dbcon->getConnection();
                                                 <td style="background-color: black;color: white;"><a href="AddToCardFoodDelete.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
                                             </tr>
                                             <?php
+                                            $popular_food_count = $i;
                                             $i++;
+                                            
                                             $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
                                         }
                                     }
@@ -310,8 +339,8 @@ $con = $dbcon->getConnection();
                                                         }
                                                     }
 
-                                                    echo $totalCustomizedPrice.".00";
-                                                    
+                                                    echo $totalCustomizedPrice . ".00";
+
                                                     $total = $total + $totalCustomizedPrice;
                                                     ?>
                                                 </td>
@@ -321,7 +350,12 @@ $con = $dbcon->getConnection();
                                                 </td>
                                             </tr>
                                             <?php
+                                            $cus_food_count = $i;
                                             $i++;
+                                            
+                                            
+                                            $total_food_count = $popular_food_count + $cus_food_count;
+                                            $_SESSION['total_food_count'] = $total_food_count;
                                         }
                                     }
                                     ?>

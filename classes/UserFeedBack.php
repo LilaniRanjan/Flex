@@ -117,11 +117,36 @@ class UserFeedBack {
 
     public static function getAllFeedbackIfVisibileOptionYES($con) {
         try {
-            $dbcon = new DbConnector();
-            $con = $dbcon->getConnection();
-
             $query = "SELECT * FROM feedback WHERE visible_option = 'YES'";
             $pstmt = $con->prepare($query);
+            $pstmt->execute();
+
+            $feedback_list = [];
+
+            while ($row = $pstmt->fetch(PDO::FETCH_ASSOC)) {
+                $feedback_id = $row['feed_back_id'];
+                $feedback = $row['feedback'];
+                $visible_option = $row['visible_option'];
+                $user_id = $row['user_id'];
+
+                $feedback_details = new UserFeedBack($user_id, $feedback, $visible_option);
+                $feedback_list[] = $feedback_details;
+            }
+
+            return $feedback_list;
+        } catch (Exception $exc) {
+            die("ERROR in getAllFeedbackIfVisibileOptionYES Function" . $exc->getMessage());
+        }
+    }
+
+    public static function getAllFeedBackWithPagination($con, $page = 1, $limit = 3) {
+        try {
+            $offset = ($page - 1) * $limit;
+
+            $query = "SELECT * FROM feedback LIMIT :limit OFFSET :offset";
+            $pstmt = $con->prepare($query);
+            $pstmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $pstmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $pstmt->execute();
 
             while ($row = $pstmt->fetch(PDO::FETCH_ASSOC)) {
@@ -133,8 +158,10 @@ class UserFeedBack {
                 $feedback_details = new UserFeedBack($user_id, $feedback, $visible_option);
                 $feedback_list[] = $feedback_details;
             }
-        } catch (Exception $exc) {
-            die("ERROR in getAllFeedbackIfVisibileOptionYES Function" . $exc->getMessage());
+
+            return $feedback_list;
+        } catch (PDOException $exc) {
+            die("ERROR in getAllFeedBackWithPagination Function" . $exc->getMessage());
         }
     }
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require './classes/RiceDetails.php';
 
 include './classes/CurryDetails.php';
@@ -91,7 +92,7 @@ try {
                     </div>
                 </div>
             </div>
-            Hello
+            
             <div>
                 <section class="header-main" style="color: white;">
                     <div class="container-fluid">
@@ -112,19 +113,45 @@ try {
                             <div class="col-md-2">
                                 <div class="float-right">
                                     <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                        <a href="#">
+                                        <a href="cart.php">
                                             <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                         </a>
                                         <div class="d-flex flex-column ms-2">
-                                            <span class="qty">0 Food</span>
-                                            <span class="fw-bold">$0.00</span>
+                                            <span class="qty">
+                                                <?php
+                                                if (isset($_SESSION['total_food_count'])) {
+                                                    echo $_SESSION['total_food_count'];
+                                                } else {
+                                                    echo '0';
+                                                }
+                                                ?>
+                                                Food</span>
+                                            <span class="fw-bold">
+                                                <?php
+                                                if (isset($_SESSION['payment_total_amount'])) {
+                                                    echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                                } else {
+                                                    echo '0.00';
+                                                }
+                                                ?>
+                                            </span>
                                         </div>    
                                     </div> 
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                    <button type="button" class="btn btn-outline-warning btn-lg">Sign In</button>
+                                    <?php
+                                    if (isset($_SESSION['user_id'])) {
+                                        ?>
+                                        <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                        <?php
+                                    }
+                                    ?>
                                 </div> 
                             </div>
                         </div>
@@ -146,7 +173,7 @@ try {
                                     <a class="dropdown-item" href="./beverage.php">Beverages</a>
                                 </div>
                             </li>
-                            <li class="nav-item mx-3"><a href="#" class="nav-link">Advertisment</a></li>
+                            <li class="nav-item mx-3"><a href="Advertisment.php" class="nav-link">Advertisment</a></li>
                             <li class="nav-item mx-3"><a href="#" class="nav-link">Contact</a></li>
                             <li class="nav-item mx-3"><a href="#" class="nav-link">About Us</a></li>
                         </ul>
@@ -179,7 +206,7 @@ try {
                             <?php
                             try {
                                 $rs1 = \classes\RiceDetails::GetRiceDetails($con);
-                                foreach ($rs1 as $rice){
+                                foreach ($rs1 as $rice) {
                                     ?>
                                     <tr>
                                         <td>
@@ -197,7 +224,7 @@ try {
                             ?>
                         </div>
                     </fieldset>
-                    
+
                     <!-- Curry Selection -->
                     <fieldset class="mt-5">
                         <tr>
@@ -206,24 +233,24 @@ try {
                         </th>
                         </tr>
                         <div class="option-group">
-                            <?php 
-                                try{
-                                    $rs2 = classes\CurryDetails::GetCurryDetails($con);
-                                    foreach ($rs2 as $curry){
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check" id="foodItem">
-                                                    <input class="form-check-input" type="checkbox" name="curry[]" id="chicken" value="<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con); ?>">
-                                                    <label class="form-check-label" for="chicken"><?php echo $curry->getCurry_name(); ?> - Rs <?php echo $curry->getCurry_price(); ?></label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                } catch (Exception $exc){
-                                    die("ERROR" . $exc->getMessage());
+                            <?php
+                            try {
+                                $rs2 = classes\CurryDetails::GetCurryDetails($con);
+                                foreach ($rs2 as $curry) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check" id="foodItem">
+                                                <input class="form-check-input" type="checkbox" name="curry[]" id="chicken" value="<?php echo $curry->GetCurryIdByCurryName($curry->getCurry_name(), $con); ?>">
+                                                <label class="form-check-label" for="chicken"><?php echo $curry->getCurry_name(); ?> - Rs <?php echo $curry->getCurry_price(); ?></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
                                 }
+                            } catch (Exception $exc) {
+                                die("ERROR" . $exc->getMessage());
+                            }
                             ?>
                         </div>
                     </fieldset>
@@ -238,19 +265,19 @@ try {
                                         <label for="spice" style="color: wheat;">Spice Level:</label>
                                     </h4>
                                     <select name="spice" class="form-select form-select-lg mb-3" id="spice" style="background-color: black; color: white;">
-                                        <?php 
-                                            try{
-                                                $rs3 = classes\SpiceLevel::GetSpicyDetails($con);
-                                                foreach ($rs3 as $spicy){
-                                                    ?>
-                                                    <option value="<?php echo $spicy->GetSpiceLevelIdBySpiceLevelName($spicy->getSpice_level(), $con); ?>">
-                                                        <?php echo $spicy->getSpice_level(); ?>
-                                                    </option>
-                                                    <?php
-                                                }
-                                            } catch (Exception $exc){
-                                                die("ERROR" . $exc->getMessage());
+                                        <?php
+                                        try {
+                                            $rs3 = classes\SpiceLevel::GetSpicyDetails($con);
+                                            foreach ($rs3 as $spicy) {
+                                                ?>
+                                                <option value="<?php echo $spicy->GetSpiceLevelIdBySpiceLevelName($spicy->getSpice_level(), $con); ?>">
+                                                    <?php echo $spicy->getSpice_level(); ?>
+                                                </option>
+                                                <?php
                                             }
+                                        } catch (Exception $exc) {
+                                            die("ERROR" . $exc->getMessage());
+                                        }
                                         ?>
                                     </select>
                                 </div>
@@ -258,7 +285,7 @@ try {
                         </tr>
                     </div>
 
-                   
+
                     <!-- Portion Size -->
                     <div class="option-group mt-5">
                         <tr>
@@ -267,17 +294,17 @@ try {
                                     <label for="portion" style="color: wheat;">Portion Size:</label>
                                 </h4>
                                 <select name="portion" class="form-select form-select-lg mb-3" id="spice" style="background-color: black; color: white;">
-                                    <?php 
-                                    try{
+                                    <?php
+                                    try {
                                         $rs4 = classes\PortionSize::GetPortionSizeDetails($con);
-                                        foreach ($rs4 as $portion){
+                                        foreach ($rs4 as $portion) {
                                             ?>
                                             <option value="<?php echo $portion->getPortionIdByPortionName($portion->getPortion_size_name(), $con); ?>">
                                                 <?php echo $portion->getPortion_size_name(); ?>
                                             </option>
                                             <?php
                                         }
-                                    } catch (Exception $exc){
+                                    } catch (Exception $exc) {
                                         die("ERROR" . $exc->getMessage());
                                     }
                                     ?>
@@ -293,35 +320,35 @@ try {
                         </th>
                         </tr>
                         <div class="option-group">
-                            <?php 
-                               try{
-                                   $rs5 = classes\ExtraIngredients::GetExtraIngredientDetails($con);
-                                    foreach ($rs5 as $extra){
-                                        ?>
-                                        <tr>
-                                             <td>
-                                                 <div class="form-check" id="foodItem">
-                                                     <input class="form-check-input" type="checkbox" name="extra[]" id="onions" value="<?php echo $extra->getExtraIngredientIdByName($extra->getExtra_ingredients_name(), $con); ?>">
-                                                     <label class="form-check-label" for="onions"><?php echo $extra->getExtra_ingredients_name(); ?> - Rs <?php echo $extra->getExtra_ingredients_price(); ?></label>
-                                                 </div>
-                                             </td>
-                                         </tr>
-                                        <?php
-                                    }
-                               } catch (Exception $exc){
-                                   die("ERROR" . $exc->getMessage());
-                               }
+                            <?php
+                            try {
+                                $rs5 = classes\ExtraIngredients::GetExtraIngredientDetails($con);
+                                foreach ($rs5 as $extra) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check" id="foodItem">
+                                                <input class="form-check-input" type="checkbox" name="extra[]" id="onions" value="<?php echo $extra->getExtraIngredientIdByName($extra->getExtra_ingredients_name(), $con); ?>">
+                                                <label class="form-check-label" for="onions"><?php echo $extra->getExtra_ingredients_name(); ?> - Rs <?php echo $extra->getExtra_ingredients_price(); ?></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            } catch (Exception $exc) {
+                                die("ERROR" . $exc->getMessage());
+                            }
                             ?>
                         </div>
                     </fieldset>
-                    <?php 
-                        if($_SERVER["REQUEST_METHOD"] == "GET"){
-                            if(isset($_GET['total'])){
-                                $total_price = $_GET['total'];
-                            } else {
-                                $total_price = 0;
-                            }
-                        } 
+                    <?php
+                    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                        if (isset($_GET['total'])) {
+                            $total_price = $_GET['total'];
+                        } else {
+                            $total_price = 0;
+                        }
+                    }
                     ?>
                     <tr>
                         <td>

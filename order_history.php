@@ -6,14 +6,12 @@ require_once './classes/DbConnector.php';
 $dbcon = new \classes\DbConnector();
 $con = $dbcon->getConnection();
 
-function handleSuccessResponse($responseObject)
-{
+function handleSuccessResponse($responseObject) {
     $nccReference = $responseObject->data->nccReference;
     $responseText = $responseObject->data->responseText;
 
 //    echo "Success! NCC Reference: $nccReference, Response Text: $responseText";
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -150,15 +148,41 @@ function handleSuccessResponse($responseObject)
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty">0 Food</span>
-                                        <span class="fw-bold">Rs 0.00</span>
+                                        <span class="qty">
+                                            <?php
+                                            if (isset($_SESSION['total_food_count'])) {
+                                                echo $_SESSION['total_food_count'];
+                                            } else {
+                                                echo '0';
+                                            }
+                                            ?>
+                                            Food</span>
+                                        <span class="fw-bold">
+                                            <?php
+                                            if (isset($_SESSION['payment_total_amount'])) {
+                                                echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                            } else {
+                                                echo '0.00';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>    
                                 </div> 
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                <?php 
+                                    if(isset($_SESSION['user_id'])){
+                                        ?>
+                                        <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                        <?php
+                                    }
+                                ?>
                             </div> 
                         </div>
                     </div>
@@ -227,29 +251,25 @@ function handleSuccessResponse($responseObject)
                                 <tbody class="text-center">
 
                                     <?php
+                                    date_default_timezone_set('UTC');
+                                    $currentDate = date('Y-m-d H:i:s');
                                     if (isset($_SESSION['cart'])) {
-                                        foreach ($cart as $key => $value) {
-                                            $popular_obj = new PopularFoodDetails(null, null, null, null, null);
-                                            $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
-                                            ?>
-                                            <tr>
-                                                <td style="background-color: black; color: white;">
-                                                    <?php 
-                                                    if(isset($_GET['reference'])){
-                                                        echo $_GET['reference'];
-                                                    } else {
-                                                        echo '0';
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
-                                                <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
-                                                <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
-                                                </tr>
-                                            <?php
-                                            $i++;
-                                            $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
-                                        }
+                                        ?>
+                                        <tr>
+                                            <td style="background-color: black; color: white;">
+                                                <?php
+                                                if (isset($_GET['reference'])) {
+                                                    echo $_GET['reference'];
+                                                } else {
+                                                    echo '0';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td style="background-color: black; color: white;"><?php echo $currentDate; ?></td>
+                                            <td style="background-color: black; color: white;"><?php echo "IN PROGRESS"; ?></td>
+                                            <td style="background-color: black; color: white;"><?php echo $_SESSION['payment_total_amount']; ?></td>
+                                        </tr>
+                                        <?php
                                     }
                                     ?>
                                 </tbody>
