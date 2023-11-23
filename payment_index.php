@@ -221,20 +221,26 @@ if ($_SESSION['user_id']) {
                     ?>
                     <!--Main Content Section-->
                     <main class="main-container">
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-                            <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
-                                <div class="card-header text-center"><h4 style="color: #E88F2A;">BILLING DETAILS</h4></div>
+                        <form action="./yazhii-ipayos-client-demo/ncc_init_redirect.php" method="POST" enctype="multipart/form-data">
+                            <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 35%;">
+                                <div class="card-header text-center"><h4 style="color: #E88F2A;">ONLINE PAYMENT</h4></div>
                                 <hr>
                                 <div class="card-body">
                                     <div class="card-body">
                                         <div class="form-group my-2">
-                                            <label for="first_name">First Name :</label>
-                                            <input style="background-color: black; color: white;" name="first_name" type="text" id="first_name" class="form-control" value="<?php echo $user_detail->getFirstName(); ?>" required/>  
-                                        </div>
-                                        <br>
-                                        <div class="form-group my-2">
-                                            <label for="last_name">Last Name :</label>
-                                            <input style="background-color: black; color: white;" name="last_name" type="text" id="last_name" class="form-control" value="<?php echo $user_detail->getLastName(); ?>" required/>
+                                            <label for="amount">AMOUNT :</label>
+                                            <b>
+                                                <?php
+                                                if (isset($_SESSION['payment_total_amount'])) {
+                                                    echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                                    ?>
+                                                <input type="hidden" value="<?php echo $_SESSION['payment_total_amount']; ?>" name="amount" id="amount"/>
+                                                    <?php
+                                                } else {
+                                                    echo "Rs 0.00";
+                                                }
+                                                ?>
+                                            </b>
                                         </div>
                                         <br>
                                         <div class="form-group my-2">
@@ -244,11 +250,11 @@ if ($_SESSION['user_id']) {
                                         <br>
                                         <div class="form-group my-2">
                                             <label for="phone_number">Phone number :</label>
-                                            <input style="background-color: black; color: white;" name="phone_number" type="number" id="phone_number" class="form-control" value="<?php echo $user_detail->getPhoneNumber(); ?>" required/>
+                                            <input style="background-color: black; color: white;" name="mobileNumber" type="number" id="phone_number" class="form-control" value="<?php echo $user_detail->getPhoneNumber(); ?>" required/>
                                         </div>
                                         <br>
-                                        <br>
-                                        <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">ADD DETAILS</button>
+
+                                        <button type="submit" name="submit" class="mt-3 btn btn-lg btn-block form-control" style="background-color: #333; color: white; border: 1px solid #E88F2A;">PAY</button>
                                     </div>
                                 </div>
                             </div>
@@ -259,63 +265,9 @@ if ($_SESSION['user_id']) {
             }
             ?>
 
-            <div class="container">
-                <div class="container">
-                    <table class="table table-hover table-responsive-md" style="color: white;">
-                        <thead class="text-center py-2">
-                            <tr>
-                                <th colspan="2">Your Order</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="px-5">Order Total :</td>
-                                <td>
-                                    <?php
-                                    if (isset($_SESSION['payment_total_amount'])) {
-                                        echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
-            <div id="radioCard" class="container py-5 card my-5">
-                <div class="container card-header">
-                    <h3>Payment Method</h3>
-                </div>
-                <hr>
-                <form action="payment_decision_section.php" method="POST">
-                    <div class="container card-body">
-                        <div class="row">
-                            <div class="col-sm">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment_option" id="flexRadioDefault1" value="COD">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Cash On Deilivery
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment_option" id="flexRadioDefault1" value="Online">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Online
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="d-grid gap-2 my-4">
-                                <button class="btn btn-outline-warning" type="submit">PAY NOW</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+
+
 
 
             <!-- Footer Start -->

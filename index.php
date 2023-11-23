@@ -2,6 +2,7 @@
 session_start();
 require_once './classes/PopularFoodDetails.php';
 require_once './classes/DbConnector.php';
+require_once './classes/UserFeedBack.php';
 
 $dbcon = new \classes\DbConnector();
 $con = $dbcon->getConnection();
@@ -368,7 +369,36 @@ $con = $dbcon->getConnection();
             <!--Product page End-->
 
             <!--Feedback Section Start-->
+            <?php 
+                $user_feedback_obj = new classes\UserFeedBack(null, null, null);
+                $feedbacks = $user_feedback_obj->getAllFeedbackIfVisibileOptionYES($con);
+                ?>
             <div id="carouselExampleSlidesOnly" class="carousel slide container" data-ride="carousel">
+                <div class="row carousel-item active">
+            <?php
+                foreach ($feedbacks as $feedback) {
+                    for($i=1; $i<=3; $i++){
+                       ?>
+                        <section id="feedbackCard" class="py-5 col-lg-4">
+                        <div id="container">
+                            <div id="blockquote-custom">
+                                <div id="blockquote-custom-icon"><i class="fa fa-quote-left text-white"></i></div>
+                                <p class="mb-0 mt-2 font-italic">"The Flex canteen offers a delightful experience with a diverse menu, prompt service, and a clean environment. The food is delicious and reasonably priced, making it a top choice for students.<a href="#" class="text-info">#Flex</a>."</p>
+                                <footer id="blockquote-footer" class="pt-4 mt-4 border-top">Someone famous in
+                                    <cite title="Source Title">UWU</cite>
+                                </footer>
+                            </div>
+                        </div>
+                    </section>
+                        <?php
+                    }
+                }
+                ?>
+                </div>
+            </div>
+            <?php
+            ?>
+<!--            <div id="carouselExampleSlidesOnly" class="carousel slide container" data-ride="carousel">
                 <div class="row carousel-item active">
                     <section id="feedbackCard" class="py-5 col-lg-4">
                         <div id="container">
@@ -407,7 +437,7 @@ $con = $dbcon->getConnection();
                     <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">ADD FEEDBACK</button>
                 </div>
 
-                <!--Model-->
+                Model
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <form action="UserFeedBack.php" method="POST">
@@ -472,7 +502,7 @@ $con = $dbcon->getConnection();
 
                     <button style="color: wheat;" id="parastyle" type="button" class="btn btn-outline-warning">ADD FEEDBACK</button>
                 </div>
-            </div>
+            </div>-->
             <!--Feedback Section End-->
 
             <!-- Footer Start -->

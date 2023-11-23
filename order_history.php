@@ -5,6 +5,15 @@ require_once './classes/DbConnector.php';
 
 $dbcon = new \classes\DbConnector();
 $con = $dbcon->getConnection();
+
+function handleSuccessResponse($responseObject)
+{
+    $nccReference = $responseObject->data->nccReference;
+    $responseText = $responseObject->data->responseText;
+
+//    echo "Success! NCC Reference: $nccReference, Response Text: $responseText";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -197,9 +206,6 @@ $con = $dbcon->getConnection();
             <div class="card-header my-3 d-inline px-5 mx-5">
             </div>
             <hr>
-            <div class="d-inline d-flex justify-content-end mx-5 px-5">
-                <button><a href="checkout.php"  class="btn active" role="button" aria-pressed="true" style="background-color: black; color: wheat; border: 1px solid white; font-size: 18px;">CHECKOUT</a></button>
-            </div>
 
             <div class="card-body px-5 mx-5">
                 <div>
@@ -211,13 +217,10 @@ $con = $dbcon->getConnection();
                             <table class="table table-hover table-responsive-md">
                                 <thead class="text-center py-2">
                                     <tr>
-                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">IMAGE</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">NAME</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">PRICE</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">QUANTITY</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">REFERENCE NO</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">DATE</th>
+                                        <th style="background-color: #333; color: wheat;" scope="col">STATUS</th>
                                         <th style="background-color: #333; color: wheat;" scope="col">TOTAL</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col" colspan="2">Action</th>
                                     </tr>
                                 </thead>
 
@@ -230,15 +233,19 @@ $con = $dbcon->getConnection();
                                             $popular_detail = $popular_obj->getPopularFoodDetailById($con, $key);
                                             ?>
                                             <tr>
-                                                <td style="background-color: black; color: white;"><?php echo $i; ?></td>
-                                                <td style="background-color: black; color: white;"><img src="./AdminPanel/<?php echo $popular_detail->getPopular_food_image_file(); ?>" class="img-fluid" alt="" style="height: 80px; width: 80px;"></td>
-                                                <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><?php echo $popular_detail->getPopular_food_name(); ?></a></td>
+                                                <td style="background-color: black; color: white;">
+                                                    <?php 
+                                                    if(isset($_GET['reference'])){
+                                                        echo $_GET['reference'];
+                                                    } else {
+                                                        echo '0';
+                                                    }
+                                                    ?>
+                                                </td>
                                                 <td style="background-color: black; color: white;"><?php echo $popular_detail->getPopular_food_current_price(); ?></td>
                                                 <td style="background-color: black; color: white;"><?php echo $value['quantity']; ?></td>
                                                 <td style="background-color: black; color: white;"><?php echo (($popular_detail->getPopular_food_current_price()) * ($value['quantity'])); ?></td>
-                                                <td style="background-color: black; color: white;"><a href="SingleProduct.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-pencil-square" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
-                                                <td style="background-color: black;color: white;"><a href="AddToCardFoodDelete.php?id=<?php echo $popular_detail->getPopularFoodIdByFoodName($popular_detail->getPopular_food_name(), $con); ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a></td>
-                                            </tr>
+                                                </tr>
                                             <?php
                                             $i++;
                                             $total = $total + (($popular_detail->getPopular_food_current_price()) * ($value['quantity']));
@@ -251,101 +258,7 @@ $con = $dbcon->getConnection();
 
                         <br>
                         <br>
-
-                        <h2 style="text-align: center;">Customize Food</h2>
-                        <br>
-                        <div class="charts-cardss table-responsive">
-                            <table class="table table-hover table-responsive-md">
-                                <thead class="text-center py-2">
-                                    <tr>
-                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col" class="text-center">INGREDIENTS</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">PRICE</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">TOTAL</th>
-                                        <th style="background-color: #333; color: wheat;" scope="col">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="text-center">
-                                    <?php
-                                    if (isset($_SESSION['CusCartId']) && !empty($_SESSION['CusCartId'])) {
-                                        $i = 1;
-                                        foreach ($_SESSION['CusCartId'] as $index => $foodId) {
-                                            ?>
-                                            <tr>
-                                                <td style="background-color: black; color: white;"><?php echo $i; ?></td>
-                                                <td style="background-color: black; color: white; text-align: left;">
-                                                    <?php
-                                                    echo '<li>RICE: ' . (isset($_SESSION['CusCartName'][$index]['rice']) ? $_SESSION['CusCartName'][$index]['rice'] : 'Not selected') . '</li>';
-                                                    echo '<li>CURRY: ' . (isset($_SESSION['CusCartName'][$index]['curry']) && is_array($_SESSION['CusCartName'][$index]['curry']) ? implode(', ', $_SESSION['CusCartName'][$index]['curry']) : 'Not selected') . '</li>';
-                                                    echo '<li>SPICE LEVEL: ' . (isset($_SESSION['CusCartName'][$index]['spice']) ? $_SESSION['CusCartName'][$index]['spice'] : 'Not selected') . '</li>';
-                                                    echo '<li>PORTION SIZE: ' . (isset($_SESSION['CusCartName'][$index]['portion']) ? $_SESSION['CusCartName'][$index]['portion'] : 'Not selected') . '</li>';
-                                                    echo '<li>EXTRA INGREDIENTS: ' . (isset($_SESSION['CusCartName'][$index]['extra']) && is_array($_SESSION['CusCartName'][$index]['extra']) ? implode(', ', $_SESSION['CusCartName'][$index]['extra']) : 'Not selected') . '</li>';
-                                                    ?>
-                                                </td>
-                                                <td style="background-color: black; color: white; text-align: left;">
-                                                    <?php
-                                                    $total_curry_price = 0;
-                                                    echo '<li>RICE: ' . (isset($_SESSION['CusCartPrice'][$index]['rice']) ? $_SESSION['CusCartPrice'][$index]['rice'] : 'Not selected') . '</li>';
-                                                    echo '<li>CURRY: ' . (isset($_SESSION['CusCartPrice'][$index]['curry']) && is_array($_SESSION['CusCartPrice'][$index]['curry']) ? implode(', ', $_SESSION['CusCartPrice'][$index]['curry']) : 'Not selected') . '</li>';
-                                                    echo '<li>EXTRA INGREDIENTS: ' . (isset($_SESSION['CusCartPrice'][$index]['extra']) && is_array($_SESSION['CusCartPrice'][$index]['extra']) ? implode(', ', $_SESSION['CusCartPrice'][$index]['extra']) : 'Not selected') . '</li>';
-                                                    ?>
-                                                </td>
-                                                <td style="background-color: black; color: white;">
-                                                    <?php
-                                                    $totalCustomizedPrice = 0;
-
-                                                    $ricePrice = is_numeric($_SESSION['CusCartPrice'][$index]['rice']) ? $_SESSION['CusCartPrice'][$index]['rice'] : 0;
-                                                    $totalCustomizedPrice += $ricePrice;
-
-                                                    if (is_array($_SESSION['CusCartPrice'][$index]['curry'])) {
-                                                        foreach ($_SESSION['CusCartPrice'][$index]['curry'] as $curry) {
-                                                            $totalCustomizedPrice += is_numeric($curry) ? $curry : 0;
-                                                        }
-                                                    }
-
-                                                    if (is_array($_SESSION['CusCartPrice'][$index]['extra'])) {
-                                                        foreach ($_SESSION['CusCartPrice'][$index]['extra'] as $extra) {
-                                                            $totalCustomizedPrice += is_numeric($extra) ? $extra : 0;
-                                                        }
-                                                    }
-
-                                                    echo $totalCustomizedPrice.".00";
-                                                    
-                                                    $total = $total + $totalCustomizedPrice;
-                                                    ?>
-                                                </td>
-
-                                                <td style="background-color: black;color: white;">
-                                                    <a href="DeleteCusFood.php?id=<?php echo $index; ?>"><button id="iconColour" style="background-color: black;"><i class="fa fa-trash" aria-hidden="true" style="color: #E88F2A;"></i></button></a>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                            $i++;
-                                        }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="card">
-                <div class="card-header">Total</div>
-                <div class="card-body">
-                    Total Amount : Rs <?php
-                    if (isset($_SESSION['cart'])) {
-                        echo $total;
-                        $_SESSION['payment_total_amount'] = $total;
-                    } else {
-                        echo 0;
-                    }
-                    ?>.00 
                 </div>
             </div>
         </div>
