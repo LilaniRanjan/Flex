@@ -22,7 +22,8 @@ if (isset($_POST["userId"],$_POST["firstName"], $_POST["lastName"],$_POST["email
         $lastName = $_POST["lastName"];
         $emailAddress = $_POST["emailAddress"];
         $phoneNumber = $_POST["phoneNumber"];
-        $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+//        $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+        $password = $_POST["password"];
         $role = "student";
         $user = new User($userId,$firstName, $lastName,  $emailAddress,$phoneNumber, $password, $role);
         if($user->register($dbcon)){

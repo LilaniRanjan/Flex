@@ -128,16 +128,16 @@ try {
                 <?php
                 try {
                     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-                        if (isset($_POST['popular_food_id'], $_POST['popular_food_image_file'], $_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_vote'])) {
+                        if (isset($_POST['popular_food_id'], $_POST['popular_food_image_file'], $_POST['popular_food_name'], $_POST['popular_food_default_price'], $_POST['popular_food_current_price'], $_POST['popullar_food_description'])) {
                             $popular_food_id = $_POST['popular_food_id'];
                             $popular_food_image_file = $_POST['popular_food_image_file'];
                             $popular_food_name = $_POST['popular_food_name'];
                             $popular_food_default_price = $_POST['popular_food_default_price'];
                             $popular_food_current_price = $_POST['popular_food_current_price'];
-                            $popullar_food_vote = $_POST['popullar_food_vote'];
+                            $popullar_food_description = $_POST['popullar_food_description'];
 
                             try {
-                                $popular_food_detail = new PopularFoodDetails($popular_food_image_file, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_vote);
+                                $popular_food_detail = new PopularFoodDetails($popular_food_image_file, $popular_food_name, $popular_food_default_price, $popular_food_current_price, $popullar_food_description);
                                 $popular = $popular_food_detail->updatePopularFoodDetails($con, $popular_food_id);
                                 if ($popular) {
                                     header("Location: AdminPopularFoodManage.php");
@@ -173,7 +173,7 @@ try {
                                 ?>
                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                                     <div id="cardStyle" class="card mx-auto shadow p-3 mb-5 rounded" style="width: 50%;">
-                                        <div class="card-header text-center"><h4 style="color: #E88F2A;">EDIT CURRY DETAILS</h4></div>
+                                        <div class="card-header text-center"><h4 style="color: #E88F2A;">EDIT POPULAR FOOD DETAILS</h4></div>
                                         <hr>
                                         <div class="card-body">
                                             <div class="card-body">
@@ -201,8 +201,8 @@ try {
                                                 </div>
                                                 <br>
                                                 <div class="form-group my-2">
-                                                    <label for="popullar_food_vote">Food Vote :</label>
-                                                    <input style="background-color: black; color: white;" name="popullar_food_vote" type="text" id="popullar_food_vote" class="form-control" value="<?php echo $popular_detail->getPopular_food_vote();?>" required/>  
+                                                    <label for="popullar_food_vote">Food Description :</label>
+                                                    <input style="background-color: black; color: white;" name="popullar_food_description" type="text" id="popullar_food_description" class="form-control" value="" required/>  
                                                 </div>
                                                 <br>
                                                 <br>

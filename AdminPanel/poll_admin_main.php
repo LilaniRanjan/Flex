@@ -86,7 +86,7 @@ $dbcon = new \classes\DbConnector();
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="poll_admin_main.php" style="color: wheat;">
+                        <a href="View_poll.php" style="color: wheat;">
                             <span class="material-icons-outlined">poll</span> Voting Poll
                         </a>
                     </li>
@@ -117,17 +117,14 @@ $dbcon = new \classes\DbConnector();
             <!-- Main -->
             <div class="dashboard">
                 <div class="panel rice-panel">
-                    <i class="fas fa-utensils panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminPopularFoodManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">POPULAR FOODS</h2></a>
+                      <i class="fas fa-bars panel-icon" style="color: #E88F2A;"></i>
+                    <a href="view_poll.php" id="Textdecoration"><h2 style="color: #E88F2A;">POLL MANAGEMENT</h2></a>
                 </div>
                 <div class="panel curry-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminUserFeedback.php" id="Textdecoration"><h2 style="color: #E88F2A;">FEED BACK</h2></a>
+                   <i class="fas fa-poll panel-icon" style="color: #E88F2A;"></i>
+                    <a href="vote_results.php" id="Textdecoration"><h2 style="color: #E88F2A;">VIEW RESULTS</h2></a>
                 </div>
-                <div class="panel spice-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="AdminAddAdvertisment.php" id="Textdecoration"><h2 style="color: #E88F2A;">ADVERTISMENT</h2></a>
-                </div>
+               
             </div>
             <!-- End Main -->
 

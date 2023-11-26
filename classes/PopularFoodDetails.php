@@ -127,7 +127,7 @@ class PopularFoodDetails {
 
     public function updatePopularFoodDetails($con, $id) {
         try {
-            $query = "UPDATE popularfooddetails SET popular_food_name = ?, popular_food_default_price = ?, popular_food_current_price = ?, popula_food_vote = ? WHERE popular_food_id = ?";
+            $query = "UPDATE popularfooddetails SET popular_food_name = ?, popular_food_default_price = ?, popular_food_current_price = ?, popullar_food_desc = ? WHERE popular_food_id = ?";
             $pstmt = $con->prepare($query);
             $pstmt->bindValue(1, $this->popular_food_name);
             $pstmt->bindValue(2, $this->popular_food_default_price);

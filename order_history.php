@@ -251,7 +251,7 @@ function handleSuccessResponse($responseObject) {
                                 <tbody class="text-center">
 
                                     <?php
-                                    date_default_timezone_set('UTC');
+                                    date_default_timezone_set('Asia/Colombo');
                                     $currentDate = date('Y-m-d H:i:s');
                                     if (isset($_SESSION['cart'])) {
                                         ?>

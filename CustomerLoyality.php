@@ -1,5 +1,4 @@
 <?php
-
 require './classes/DbConnector.php';
 $dbcon = new \classes\DbConnector();
 $conn = $dbcon->getconnection();
@@ -21,10 +20,10 @@ try {
         <link rel="stylesheet" type="text/css" href="assets/css/home.css">
         <link rel="stylesheet" type="text/css" href="assets/css/CustomerLoyality_style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-        
+
     </head>
     <body>
-    <!--Top Header-->
+        <!--Top Header-->
         <div class="wrap" id="wrap">
             <div class="">
                 <div class="row justify-content-between p-2">
@@ -68,15 +67,41 @@ try {
                                         <span class="shop-bag"><i class="fa-solid fa-cart-shopping fa-sm"></i></span>
                                     </a>
                                     <div class="d-flex flex-column ms-2">
-                                        <span class="qty">0 Food</span>
-                                        <span class="fw-bold">$0.00</span>
+                                        <span class="qty">
+                                            <?php
+                                            if (isset($_SESSION['total_food_count'])) {
+                                                echo $_SESSION['total_food_count'];
+                                            } else {
+                                                echo '0';
+                                            }
+                                            ?>
+                                            Food</span>
+                                        <span class="fw-bold">
+                                            <?php
+                                            if (isset($_SESSION['payment_total_amount'])) {
+                                                echo "Rs " . $_SESSION['payment_total_amount'] . ".00";
+                                            } else {
+                                                echo 'Rs 0.00';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>    
                                 </div> 
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="d-flex d-none d-md-flex flex-row align-items-center">
-                                <button type="button" class="btn btn-outline-warning btn-lg">Sign In</button>
+                                <?php
+                                if (isset($_SESSION['user_id'])) {
+                                    ?>
+                                    <a href="Logout.php" type="button" class="btn btn-outline-warning btn-lg">LogOut</a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a href="Login.php" type="button" class="btn btn-outline-warning btn-lg">Sign In</a>
+                                    <?php
+                                }
+                                ?>
                             </div> 
                         </div>
                     </div>
@@ -110,38 +135,34 @@ try {
             </nav>
         </div>
         <!--NavigationBar end-->
-        
+
         <div class="history">
-        <div class="table-container">
-            <h5>Customer Loyality Monthly Winners</h5><br><br>
-            <table id="historyTable" class="table">
-                <thead class="text-center py-2">
-                    <tr>
-                        <th style="background-color: #333; color: wheat;" scope="col">Entrollement Number</th>
-                        <th style="background-color: #333; color: wheat;" scope="col">Name</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    
+            <div class="table-container">
+                <h5>Customer Loyality Monthly Winners</h5><br><br>
+                <table id="historyTable" class="table">
+                    <thead class="text-center py-2">
+                        <tr>
+                            <th style="background-color: #333; color: wheat;" scope="col">Entrollement Number</th>
+                            <th style="background-color: #333; color: wheat;" scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+
                         <?php
                         try {
                             $oneMonthAgo = date('Y-m-d', strtotime('-1 month'));
-                            $query = "SELECT u.user_id, u.first_name
-                                FROM user u
-                                JOIN (
-                                SELECT user_id, MAX(total_amount) AS max_total_amount
-                                FROM `order` -- Use backticks here to escape the reserved keyword
-                                WHERE order_date >= :oneMonthAgo
-                                GROUP BY user_id
-                                ) o ON u.user_id = o.user_id
-                                ORDER BY max_total_amount DESC";
+                            $query = "SELECT u.user_id, u.first_name, SUM(o.total_amount) AS total_spending
+                            FROM user u
+                            JOIN `order` o ON u.user_id = o.user_id
+                            WHERE o.order_date >= :oneMonthAgo
+                            GROUP BY u.user_id
+                            ORDER BY total_spending DESC";
 
-                            
                             $stmt = $conn->prepare($query);
                             $stmt->bindParam(':oneMonthAgo', $oneMonthAgo, PDO::PARAM_STR);
                             $stmt->execute();
                             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            
+
                             if ($result) {
                                 foreach ($result as $row) {
                                     echo "<tr>";
@@ -151,85 +172,82 @@ try {
                                 }
                             } else {
                                 echo "No data found for the specified period.";
-                                
                             }
                         } catch (PDOException $e) {
                             echo "Error: " . $e->getMessage();
-                            
                         }
-
                         ?>
-                    
-                </tbody>
-            </table><br>
+
+                    </tbody>
+                </table><br>
+            </div>
         </div>
-    </div>
-        
-    <!-- Footer Start -->
-            <div class="container-fluid bg-img text-secondary bg-dark" style="margin-top: 450px; padding-bottom: 30 px;">
-                <div class="container">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-6 mb-lg-n5">
-                            <!--<div class="d-flex flex-column align-items-center justify-content-center text-center h-100 border-inner p-4" style="background-color: #E88F2A ;">-->
-                            <a href="index.html" class="navbar-brand pt-5">
-                                <img class="px-4" src="./assets/image/Logo.png" alt="Logo" width="350">
-                            </a>
-                            <!--</div>-->
-                        </div>
-                        <div class="col-lg-8 col-md-6">
-                            <div class="row gx-5">
-                                <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                                    <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Get In Touch</h4>
-                                    <div id="footerSubFont" class="d-flex mb-2">
-                                        <i class="fa fa-map-marker px-3" aria-hidden="true" style="color: #E88F2A;"></i>
-                                        <p class="mb-0">Uva wellasa University, Badulla</p>
-                                    </div>
-                                    <div id="footerSubFont" class="d-flex mb-2">
-                                        <i class="fa fa-envelope-o px-3" aria-hidden="true" style="color: #E88F2A;"></i>
-                                        <p class="mb-0">flex@example.com</p>
-                                    </div>
-                                    <div id="footerSubFont" class="d-flex mb-2">
-                                        <i class="fa fa-phone px-3" aria-hidden="true"style="color: #E88F2A;"></i>
-                                        <p class="mb-0">+012 345 67890</p>
-                                    </div>
-                                    <div class="d-flex mt-4">
-                                        <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                                        <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                                        <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                                    </div>
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-img text-secondary bg-dark" style="margin-top: 450px; padding-bottom: 30 px;">
+            <div class="container">
+                <div class="row gx-5">
+                    <div class="col-lg-4 col-md-6 mb-lg-n5">
+                        <!--<div class="d-flex flex-column align-items-center justify-content-center text-center h-100 border-inner p-4" style="background-color: #E88F2A ;">-->
+                        <a href="index.html" class="navbar-brand pt-5">
+                            <img class="px-4" src="./assets/image/Logo.png" alt="Logo" width="350">
+                        </a>
+                        <!--</div>-->
+                    </div>
+                    <div class="col-lg-8 col-md-6">
+                        <div class="row gx-5">
+                            <div class="col-lg-4 col-md-12 pt-5 mb-5">
+                                <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Get In Touch</h4>
+                                <div id="footerSubFont" class="d-flex mb-2">
+                                    <i class="fa fa-map-marker px-3" aria-hidden="true" style="color: #E88F2A;"></i>
+                                    <p class="mb-0">Uva wellasa University, Badulla</p>
                                 </div>
-                                <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                                    <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Quick Links</h4>
-                                    <div class="d-flex flex-column justify-content-start">
-                                        <a class="mb-2" href="index.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Home</a>
-                                        <a class="mb-2" href="aboutus.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>About Us</a>
-                                        <a class="mb-2" href="services.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Our Services</a>
-                                        <a class="" href="contactus.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Contact Us</a>
+                                <div id="footerSubFont" class="d-flex mb-2">
+                                    <i class="fa fa-envelope-o px-3" aria-hidden="true" style="color: #E88F2A;"></i>
+                                    <p class="mb-0">flex@example.com</p>
+                                </div>
+                                <div id="footerSubFont" class="d-flex mb-2">
+                                    <i class="fa fa-phone px-3" aria-hidden="true"style="color: #E88F2A;"></i>
+                                    <p class="mb-0">+012 345 67890</p>
+                                </div>
+                                <div class="d-flex mt-4">
+                                    <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                                    <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                                    <a style="background-color: #E88F2A;" class="btn btn-lg btn-lg-square border-inner rounded-0 me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                                <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Quick Links</h4>
+                                <div class="d-flex flex-column justify-content-start">
+                                    <a class="mb-2" href="index.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Home</a>
+                                    <a class="mb-2" href="aboutus.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>About Us</a>
+                                    <a class="mb-2" href="services.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Our Services</a>
+                                    <a class="" href="contactus.php" id="footerSubFont"><i class="fa fa-arrow-right px-3" aria-hidden="true" style="color: #E88F2A;"></i>Contact Us</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                                <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Newsletter</h4>
+                                <p id="footerSubFont">"Savor delicious meals at our university canteen. Tasty, nutritious, affordable!"</p>
+                                <form action="">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                                        <button class="btn" style="background-color: #E88F2A;">Sign Up</button>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                                    <h4 class="text-uppercase mb-4" style="color: #E88F2A; font-size: 20px;">Newsletter</h4>
-                                    <p id="footerSubFont">"Savor delicious meals at our university canteen. Tasty, nutritious, affordable!"</p>
-                                    <form action="">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                            <button class="btn" style="background-color: #E88F2A;">Sign Up</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid text-secondary py-4" style="background: #111111; margin-top: 32 px;">
-                <div class="container text-center">
-                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Flex</a>. All Rights Reserved.</p>
-                </div>
+        </div>
+        <div class="container-fluid text-secondary py-4" style="background: #111111; margin-top: 32 px;">
+            <div class="container text-center">
+                <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Flex</a>. All Rights Reserved.</p>
             </div>
+        </div>
 
-    <!-- Bootstrap and JavaScript libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-</body>
+        <!-- Bootstrap and JavaScript libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    </body>
 </html>

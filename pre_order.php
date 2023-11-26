@@ -145,7 +145,7 @@ $dbcon = new DbConnector();
 
         <!--main part Start-->
         <div class="container" id="container" style="">
-            <form action="pre_order_back.php" method="POST" style="width:100%">
+            <form action="payment_processing.php" method="POST" style="width:100%">
                 <table>
                     <tr>
                         <th>

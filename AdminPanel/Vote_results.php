@@ -1,10 +1,11 @@
 <?php
-require_once '../classes/PopularFoodDetails.php';
-require_once '../classes/DbConnector.php';
+session_start();
+ob_start();
+require '../classes/DbConnector.php';
 
-$dbcon = new \classes\DbConnector();
+use classes\DbConnector;
+$dbcon = new DbConnector();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,15 +38,38 @@ $dbcon = new \classes\DbConnector();
             body{
                 background: url("https://media.istockphoto.com/id/1287029258/photo/blurred-images-of-restaurant-and-coffee-shop-cafe-interior-background-and-lighting-bokeh.webp?b=1&s=170667a&w=0&k=20&c=8kgHZbeO_pmQrpLg6nqX6mYFwDdGUxZWmZQq0xHemKM=");
             }
-            
+
+            #tableEdit{
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border: 2px solid #FFFFFF; 
+                border-radius: 20px;
+            }
+
+            hr{
+                background-color: whitesmoke;
+            }
+            table{
+                background-color: #E88F2A;
+            }
+            td{
+                background-color: black;
+            }
+
+            button{
+                border-color: #E88F2A;
+            }
+
+            input[type="search"]::placeholder {
+                color: #999; 
+            }
+
             .header{
                 background-color: #333;
                 color: wheat;
             }
-            
-            .panel{
-                background-color: rgba(0, 0, 0, 0.9);
-                border: 3px solid #E88F2A;
+            span{
+                color: wheat;
             }
         </style>
 
@@ -86,7 +110,7 @@ $dbcon = new \classes\DbConnector();
                         </a>
                     </li>
                     <li class="sidebar-list-item">
-                        <a href="poll_admin_main.php" style="color: wheat;">
+                        <a href="View_poll.php" style="color: wheat;">
                             <span class="material-icons-outlined">poll</span> Voting Poll
                         </a>
                     </li>
@@ -115,18 +139,73 @@ $dbcon = new \classes\DbConnector();
             <!-- End Sidebar -->
 
             <!-- Main -->
-            <div class="dashboard">
-                <div class="panel rice-panel">
-                    <i class="fas fa-utensils panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminPopularFoodManage.php" id="Textdecoration"><h2 style="color: #E88F2A;">POPULAR FOODS</h2></a>
+            <div class="card m-5" id="tableEdit">
+                <div class="card-header my-3 d-inline">
+                    POLL MANAGEMENT
                 </div>
-                <div class="panel curry-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="./AdminUserFeedback.php" id="Textdecoration"><h2 style="color: #E88F2A;">FEED BACK</h2></a>
+                <hr>
+                <div class="d-inline d-flex justify-content-end mx-3">
                 </div>
-                <div class="panel spice-panel">
-                    <i class="fas fa-pepper-hot panel-icon" style="color: #E88F2A;"></i>
-                    <a href="AdminAddAdvertisment.php" id="Textdecoration"><h2 style="color: #E88F2A;">ADVERTISMENT</h2></a>
+
+                <div class="card-body">
+                    <h5 class="card-title">
+
+                    </h5>
+                    <div>
+                        <div class="charts my-4">
+
+                            <div class="charts-cardss table-responsive">
+                                <table class="table table-hover table-responsive-md">
+                                    <thead class="text-center py-2">
+                                        <tr>
+                                            <th style="background-color: #333; color: wheat;" scope="col" class="text-center">No</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col" class="text-center">Vote Food Id</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col">Votted Date and Time</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col">Poll Id</th>
+                                            <th style="background-color: #333; color: wheat;" scope="col">User Id</th>
+<!--                                            <th style="background-color: #333; color: wheat;" scope="col" colspan="2">Action</th>-->
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    try {
+                                    $i = 1;
+                                    
+                                    $con = $dbcon->getConnection();
+                                    $query = "SELECT * FROM poll_vote";
+                                    $pstmt = $con->prepare($query);
+                                    $pstmt->execute();
+
+                                     $rss = $pstmt->fetchAll(PDO::FETCH_OBJ);
+
+                                    foreach ($rss as $rs) {
+                                    ?>
+                                    <tbody class="text-center">
+                                        <tr>
+                                            <td style="background-color: black; color: white;"><?php echo $i; ?></td>
+                                            <td style="background-color: black; color: white;"> <?php echo $rs->poll_vote_id ?></td>    
+                                            <td style="background-color: black; color: white;"><?php echo $rs->votted_date_and_time?></td>
+                                            <td style="background-color: black; color: white;"><?php echo $rs->poll_food_id ?></td>
+                                            <td style="background-color: black; color: white;"><?php if(isset($_SESSION['user_id'])){
+                                                echo $_SESSION['user_id'];
+                                            } ?></td>                                   
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                    $i++;  
+                                    }
+                                                                      
+                                    
+                                    } catch (PDOException $exc) {
+                                    echo $exc->getMessage();
+                                    }
+                                    ?>
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <!-- End Main -->

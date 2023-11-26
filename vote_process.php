@@ -14,10 +14,13 @@ try {
 }
 if (isset($_POST["vote"])) {
     if (empty($_POST["vote"])) {
-        header("Location: Vote.php?error=1"); // Corrected the location parameter
+        header("Location: Vote.php?error=1"); 
     } else {
         $vote = $_POST["vote"];
-        $currentDateTime = date("Y-m-d H:i:s");
+        
+       date_default_timezone_set('Asia/Colombo');
+       $currentDateTime = date('Y-m-d H:i:s');
+       
         
         try {
            
@@ -45,12 +48,10 @@ if (isset($_POST["vote"])) {
               }
                 
             } else {
-                echo "Poll not found."; // Handle the case where the selected poll doesn't exist
+                echo "Poll Has Expired.Please Try Again."; 
             }
         } catch (PDOException $exc) {
             echo "Error In Storing Your Vote. Please Try Again " . $exc->getMessage();
         }
     }
 }
-
-
